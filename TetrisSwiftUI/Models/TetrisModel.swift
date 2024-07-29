@@ -33,6 +33,7 @@ class TetrisModel: ObservableObject {
     @Published var currentPiece: TetrisPiece = .init(shape: .line, orientation: .north)
     @Published var currentPiecePosition: (row: Int, col: Int) = (0, 0)
     @Published var currentPieceColour: Color = TetrisConstants.activePieceColour
+    @Published var score: Int = 0
 
     init() {
         spawnPiece()
@@ -90,6 +91,15 @@ class TetrisModel: ObservableObject {
 
     func movePieceRight() {
         movePiece(.right)
+    }
+    
+    func dropPiece() {
+        print("Dropping piece")
+        while isPieceValid(at: (currentPiecePosition.row + 1, currentPiecePosition.col), piece: currentPiece) {
+            currentPiecePosition.row += 1
+        }
+        solidifyPiece()
+        spawnPiece()
     }
 
     func isPieceValid(at position: (Int, Int), piece: TetrisPiece) -> Bool {
@@ -166,9 +176,27 @@ class TetrisModel: ObservableObject {
                 grid[row][col] = .filled(TetrisConstants.staticPieceColour)
             }
         }
+        clearLines() // Call clearLines here
     }
 
     func clearLines() {
-        // Implement logic to clear completed lines and update the score
+        var newGrid = grid.filter { row in
+            !row.allSatisfy {
+                if case .filled(_) = $0 {
+                    return true
+                }
+                return false
+            }
+        }
+
+        // Add empty rows at the top of the grid
+        let linesCleared = TetrisConstants.height - newGrid.count
+        score += linesCleared
+        let emptyRow = Array(repeating: TetrisBlock.empty, count: TetrisConstants.width)
+        for _ in 0..<linesCleared {
+            newGrid.insert(emptyRow, at: 0)
+        }
+        
+        grid = newGrid
     }
 }

@@ -11,16 +11,25 @@ struct TetrisView: View {
     @ObservedObject var model = TetrisModel()
 
     var body: some View {
-        VStack(spacing: 0) {
-            ForEach(0..<model.grid.count, id: \.self) { row in
-                HStack(spacing: 0) {
-                    ForEach(0..<model.grid[row].count, id: \.self) { column in
-                        Rectangle()
-                            .fill(self.color(for: model.grid[row][column]))
-                            .frame(width: 15, height: 15)
-                            .border(Color.white, width: 0.5)
+        HStack{
+            VStack(spacing: 0) {
+                ForEach(0..<model.grid.count, id: \.self) { row in
+                    HStack(spacing: 0) {
+                        ForEach(0..<model.grid[row].count, id: \.self) { column in
+                            Rectangle()
+                                .fill(self.color(for: model.grid[row][column]))
+                                .frame(width: 15, height: 15)
+                                .border(Color.white, width: 0.5)
+                        }
                     }
                 }
+            }
+            VStack {
+                Text("Score: \(model.score)")
+                    .font(.largeTitle)
+                    .padding()
+                
+                Spacer()
             }
         }
         .border(Color.black, width: 1)
@@ -31,6 +40,7 @@ struct TetrisView: View {
             }
             .frame(width: 0, height: 0)
         )
+        
     }
 
     private func color(for block: TetrisBlock) -> Color {
@@ -56,6 +66,9 @@ struct TetrisView: View {
         case 126:
             // Up arrow
             model.rotatePiece()
+        case 49:
+            // Spacebar
+            model.dropPiece()
         default:
             break
         }

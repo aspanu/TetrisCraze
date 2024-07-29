@@ -57,7 +57,7 @@
 --nowrapoperators 
 --octalgrouping none
 --onelineforeach ignore
---operatorfunc no-space
+--operatorfunc spaced
 --organizationmode visibility
 --organizetypes actor,class,enum,struct
 --patternlet inline
@@ -72,7 +72,7 @@
 --storedvarattrs preserve
 --stripunusedargs closure-only
 --structthreshold 0
---tabwidth 4
+--tabwidth unspecified
 --throwcapturing 
 --timezone system
 --trailingclosures 
