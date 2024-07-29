@@ -12,12 +12,13 @@ struct KeyEventHandlingView: NSViewRepresentable {
 
     class NSViewWithKeyHandling: NSView {
         var keyDownHandler: (NSEvent) -> Void
-        
+
         init(frame frameRect: NSRect, keyDownHandler: @escaping (NSEvent) -> Void) {
             self.keyDownHandler = keyDownHandler
             super.init(frame: frameRect)
         }
-        
+
+        @available(*, unavailable)
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }

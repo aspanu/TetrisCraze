@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TetrisView: View {
     @ObservedObject var model = TetrisModel()
-    
+
     var body: some View {
         VStack(spacing: 0) {
             ForEach(0..<model.grid.count, id: \.self) { row in
@@ -32,7 +32,7 @@ struct TetrisView: View {
             .frame(width: 0, height: 0)
         )
     }
-    
+
     private func color(for block: TetrisBlock) -> Color {
         switch block {
         case .empty:
@@ -41,7 +41,7 @@ struct TetrisView: View {
             return color
         }
     }
-    
+
     private func handleKeyEvent(_ event: NSEvent) {
         switch event.keyCode {
         case 123:

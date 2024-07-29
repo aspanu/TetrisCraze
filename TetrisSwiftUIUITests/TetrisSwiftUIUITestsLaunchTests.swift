@@ -7,8 +7,7 @@
 
 import XCTest
 
-final class TetrisSwiftUIUITestsLaunchTests: XCTestCase {
-
+class TetrisSwiftUIUITestsLaunchTests: XCTestCase {
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }

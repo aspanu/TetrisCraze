@@ -10,21 +10,21 @@ struct TetrisPiece {
         case line
         // Add other shapes here as needed
     }
-    
+
     enum Orientation {
-        case up, right, down, left
+        case north, south, east, west
     }
-    
+
     let shape: Shape
     var orientation: Orientation
-    
+
     var cells: [(Int, Int)] {
         switch shape {
         case .line:
             switch orientation {
-            case .up, .down:
+            case .north, .south:
                 return [(0, 0), (1, 0), (2, 0), (3, 0)]
-            case .right, .left:
+            case .east, .west:
                 return [(0, 0), (0, 1), (0, 2), (0, 3)]
             }
         }
@@ -33,7 +33,7 @@ struct TetrisPiece {
 
 enum MoveDirection {
     case down, left, right
-    
+
     var transform: (Int, Int) -> (Int, Int) {
         switch self {
         case .down:

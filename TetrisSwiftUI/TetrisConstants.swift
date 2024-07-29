@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TetrisConstants {
+enum TetrisConstants {
     static let height = 20 // Number of rows
     static let width = 10 // Number of columns
     static let activePieceColour: Color = .blue
