@@ -17,7 +17,7 @@ struct TetrisView: View {
                     HStack(spacing: 0) {
                         ForEach(0..<model.grid[row].count, id: \.self) { column in
                             Rectangle()
-                                .fill(self.color(for: model.grid[row][column]))
+                                .fill(self.colour(for: model.grid[row][column]))
                                 .frame(width: 15, height: 15)
                                 .border(Color.white, width: 0.5)
                         }
@@ -43,7 +43,7 @@ struct TetrisView: View {
         
     }
 
-    private func color(for block: TetrisBlock) -> Color {
+    private func colour(for block: TetrisBlock) -> Color {
         switch block {
         case .empty:
             return Color.gray

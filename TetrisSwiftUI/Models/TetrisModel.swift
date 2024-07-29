@@ -34,11 +34,38 @@ class TetrisModel: ObservableObject {
     @Published var currentPiecePosition: (row: Int, col: Int) = (0, 0)
     @Published var currentPieceColour: Color = TetrisConstants.activePieceColour
     @Published var score: Int = 0
+    
+    private var gameTimer: Timer?
+    private var gameInterval: TimeInterval = 1.0
 
     init() {
         spawnPiece()
+        startGameTimer()
     }
 
+    func startGameTimer() {
+        gameTimer = Timer.scheduledTimer(withTimeInterval: gameInterval, repeats: true) {
+            [weak self] (timer: Timer) in
+            self?.gameLoop()
+        }
+    }
+    
+    func stopGameTimer() {
+        gameTimer?.invalidate()
+        gameTimer = nil
+    }
+    
+    func gameLoop() {
+        movePieceDown()
+        adjustGameInterval()
+    }
+    
+    func adjustGameInterval() {
+        gameInterval = max(0.1, 1.0 - Double(score) * 0.1)
+        stopGameTimer()
+        startGameTimer()
+    }
+    
     func spawnPiece() {
         currentPiece = TetrisPiece(shape: .line, orientation: .north)
         currentPiecePosition = (0, (TetrisConstants.width / 2) - 1)

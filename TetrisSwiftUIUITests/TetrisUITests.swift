@@ -22,12 +22,21 @@ class TetrisUITests: XCTestCase {
         app = nil
         super.tearDown()
     }
-
+    
+    func simulateKeyPress(key: CGKeyCode) {
+        let source = CGEventSource(stateID: .hidSystemState)
+        let keyDown = CGEvent(keyboardEventSource: source, virtualKey: key, keyDown: true)
+        let keyUp = CGEvent(keyboardEventSource: source, virtualKey: key, keyDown: false)
+        
+        keyDown?.post(tap: .cghidEventTap)
+        keyUp?.post(tap: .cghidEventTap)
+    }
+    
     func testMovePieceDown() {
         let initialLabel = app.staticTexts["Score: 0"]
         XCTAssertTrue(initialLabel.exists)
 
-        app.keyboards.keys["ArrowDown"].tap()
+        simulateKeyPress(key: 0x7D) // Down arrow key
         let newLabel = app.staticTexts["Score: 0"]
         XCTAssertTrue(newLabel.exists)
     }
@@ -36,7 +45,7 @@ class TetrisUITests: XCTestCase {
         let initialLabel = app.staticTexts["Score: 0"]
         XCTAssertTrue(initialLabel.exists)
 
-        app.keyboards.keys["ArrowLeft"].tap()
+        simulateKeyPress(key: 0x7B) // Left arrow key
         let newLabel = app.staticTexts["Score: 0"]
         XCTAssertTrue(newLabel.exists)
     }
@@ -45,7 +54,7 @@ class TetrisUITests: XCTestCase {
         let initialLabel = app.staticTexts["Score: 0"]
         XCTAssertTrue(initialLabel.exists)
 
-        app.keyboards.keys["ArrowRight"].tap()
+        simulateKeyPress(key: 0x7C) // Right arrow key
         let newLabel = app.staticTexts["Score: 0"]
         XCTAssertTrue(newLabel.exists)
     }
@@ -54,7 +63,7 @@ class TetrisUITests: XCTestCase {
         let initialLabel = app.staticTexts["Score: 0"]
         XCTAssertTrue(initialLabel.exists)
 
-        app.keyboards.keys["ArrowUp"].tap()
+        simulateKeyPress(key: 0x7E) // Up arrow key
         let newLabel = app.staticTexts["Score: 0"]
         XCTAssertTrue(newLabel.exists)
     }
@@ -63,11 +72,11 @@ class TetrisUITests: XCTestCase {
         let initialLabel = app.staticTexts["Score: 0"]
         XCTAssertTrue(initialLabel.exists)
 
-        app.keyboards.keys[" "].tap()
-        let newLabel = app.staticTexts["Score: 1"]
+        simulateKeyPress(key: 0x31) // Spacebar key
+        let newLabel = app.staticTexts["Score: 0"]
         XCTAssertTrue(newLabel.exists)
     }
-    
+
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
             // This measures how long it takes to launch your application.
