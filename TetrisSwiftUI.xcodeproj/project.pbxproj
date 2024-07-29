@@ -167,6 +167,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 86C292A42C57542B002E3F97 /* Build configuration list for PBXNativeTarget "TetrisSwiftUI" */;
 			buildPhases = (
+				86C292BA2C576DF3002E3F97 /* ShellScript */,
+				86C292B92C576D61002E3F97 /* ShellScript */,
 				86C2927B2C57542A002E3F97 /* Sources */,
 				86C2927C2C57542A002E3F97 /* Frameworks */,
 				86C2927D2C57542A002E3F97 /* Resources */,
@@ -284,6 +286,43 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		86C292B92C576D61002E3F97 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		86C292BA2C576DF3002E3F97 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftformat >/dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		86C2927B2C57542A002E3F97 /* Sources */ = {

@@ -1,0 +1,14 @@
+disabled_rules: # rule identifiers to exclude from running
+  - colon
+  - comma
+opt_in_rules: # some rules are only opt-in
+  - empty_count
+  - explicit_init
+included:
+  - TetrisSwiftUI
+  - TetrisSwiftUITests
+  - TetrisSwiftUIUITests
+excluded:
+  - Pods
+  - Carthage
+  - TetrisSwiftUI/Generated
