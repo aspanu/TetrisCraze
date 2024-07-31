@@ -18,7 +18,7 @@
 		86C292B22C57557A002E3F97 /* TetrisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292B12C57557A002E3F97 /* TetrisView.swift */; };
 		86C292B42C5756B1002E3F97 /* KeyEventHandlingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292B32C5756B1002E3F97 /* KeyEventHandlingView.swift */; };
 		86C292B62C575A91002E3F97 /* TetrisConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292B52C575A91002E3F97 /* TetrisConstants.swift */; };
-		86C292B82C576737002E3F97 /* TetrisPiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292B72C576737002E3F97 /* TetrisPiece.swift */; };
+		86C292B82C576737002E3F97 /* TetrisDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292B72C576737002E3F97 /* TetrisDataModel.swift */; };
 		86C292BC2C577532002E3F97 /* TetrisModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292BB2C577532002E3F97 /* TetrisModelTests.swift */; };
 		86C292C02C577588002E3F97 /* TetrisUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292BD2C577579002E3F97 /* TetrisUITests.swift */; };
 /* End PBXBuildFile section */
@@ -56,7 +56,7 @@
 		86C292B12C57557A002E3F97 /* TetrisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisView.swift; sourceTree = "<group>"; };
 		86C292B32C5756B1002E3F97 /* KeyEventHandlingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyEventHandlingView.swift; sourceTree = "<group>"; };
 		86C292B52C575A91002E3F97 /* TetrisConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisConstants.swift; sourceTree = "<group>"; };
-		86C292B72C576737002E3F97 /* TetrisPiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisPiece.swift; sourceTree = "<group>"; };
+		86C292B72C576737002E3F97 /* TetrisDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisDataModel.swift; sourceTree = "<group>"; };
 		86C292BB2C577532002E3F97 /* TetrisModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TetrisModelTests.swift; path = TetrisSwiftUITests/TetrisModelTests.swift; sourceTree = SOURCE_ROOT; };
 		86C292BD2C577579002E3F97 /* TetrisUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TetrisUITests.swift; path = TetrisSwiftUIUITests/TetrisUITests.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -152,7 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				86C292AF2C575539002E3F97 /* TetrisModel.swift */,
-				86C292B72C576737002E3F97 /* TetrisPiece.swift */,
+				86C292B72C576737002E3F97 /* TetrisDataModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -339,7 +339,7 @@
 				86C292852C57542A002E3F97 /* ContentView.swift in Sources */,
 				86C292B62C575A91002E3F97 /* TetrisConstants.swift in Sources */,
 				86C292B22C57557A002E3F97 /* TetrisView.swift in Sources */,
-				86C292B82C576737002E3F97 /* TetrisPiece.swift in Sources */,
+				86C292B82C576737002E3F97 /* TetrisDataModel.swift in Sources */,
 				86C292B02C575539002E3F97 /* TetrisModel.swift in Sources */,
 				86C292832C57542A002E3F97 /* TetrisSwiftUIApp.swift in Sources */,
 			);

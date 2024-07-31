@@ -5,6 +5,9 @@
 //  Created by Adrian on 2024-07-29.
 //
 
+import Foundation
+import SwiftUI
+
 struct TetrisPiece {
     enum Shape {
         case line
@@ -42,6 +45,25 @@ enum MoveDirection {
             return { ($0, $1 - 1) }
         case .right:
             return { ($0, $1 + 1) }
+        }
+    }
+}
+
+enum TetrisBlock: Identifiable, Equatable {
+    case empty, filled(Color)
+
+    var id: UUID {
+        UUID()
+    }
+
+    static func == (lhs: TetrisBlock, rhs: TetrisBlock) -> Bool {
+        switch (lhs, rhs) {
+        case (.empty, .empty):
+            return true
+        case (.filled(let lhsColour), .filled(let rhsColour)):
+            return lhsColour == rhsColour
+        default:
+            return false
         }
     }
 }

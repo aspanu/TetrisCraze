@@ -41,6 +41,22 @@ struct TetrisView: View {
             .frame(width: 0, height: 0)
         )
         
+        if model.gameOver {
+            Text("Game Over")
+                .font(.largeTitle)
+                .padding()
+            Button(action: {
+                model.startGame()
+            }) {
+                Text("Restart Game")
+                    .font(.title)
+                    .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+        }
+        
     }
 
     private func colour(for block: TetrisBlock) -> Color {

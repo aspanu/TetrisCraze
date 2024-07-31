@@ -8,25 +8,6 @@
 import Foundation
 import SwiftUI
 
-enum TetrisBlock: Identifiable, Equatable {
-    case empty, filled(Color)
-
-    var id: UUID {
-        UUID()
-    }
-
-    static func == (lhs: TetrisBlock, rhs: TetrisBlock) -> Bool {
-        switch (lhs, rhs) {
-        case (.empty, .empty):
-            return true
-        case (.filled(let lhsColour), .filled(let rhsColour)):
-            return lhsColour == rhsColour
-        default:
-            return false
-        }
-    }
-}
-
 class TetrisModel: ObservableObject {
     @Published var grid: [[TetrisBlock]] =
         Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
@@ -34,13 +15,25 @@ class TetrisModel: ObservableObject {
     @Published var currentPiecePosition: (row: Int, col: Int) = (0, 0)
     @Published var currentPieceColour: Color = TetrisConstants.activePieceColour
     @Published var score: Int = 0
+    @Published var gameOver: Bool = false
     
     private var gameTimer: Timer?
     private var gameInterval: TimeInterval = 1.0
 
     init() {
-        spawnPiece()
+        startGame()
+    }
+
+    func startGame() {
+        resetGame()
         startGameTimer()
+    }
+        
+    func resetGame() {
+        grid = Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
+        score = 0
+        gameOver = false
+        spawnPiece()
     }
 
     func startGameTimer() {
@@ -56,8 +49,10 @@ class TetrisModel: ObservableObject {
     }
     
     func gameLoop() {
-        movePieceDown()
-        adjustGameInterval()
+        if !gameOver {
+            movePieceDown()
+            adjustGameInterval()
+        }
     }
     
     func adjustGameInterval() {
@@ -69,8 +64,16 @@ class TetrisModel: ObservableObject {
     func spawnPiece() {
         currentPiece = TetrisPiece(shape: .line, orientation: .north)
         currentPiecePosition = (0, (TetrisConstants.width / 2) - 1)
-        updateGrid()
+        if !isPieceValid(at: currentPiecePosition, piece: currentPiece) {
+            print("Piece is invalid")
+            gameOver = true
+            stopGameTimer()
+        } else {
+            print("Piece is")
+            updateGrid()
+        }
     }
+
 
     func updateGrid() {
         // Reset the grid to empty
@@ -145,7 +148,6 @@ class TetrisModel: ObservableObject {
     }
 
     func rotatePiece() {
-        print("Trying to rotate piece")
         let newOrientation: TetrisPiece.Orientation
         switch currentPiece.orientation {
         case .north:
@@ -163,7 +165,6 @@ class TetrisModel: ObservableObject {
         if isPieceValid(at: currentPiecePosition, piece: newPiece) {
             currentPiece = newPiece
         } else {
-            print("Rotation invalid, attempting to adjust position")
             // Attempt to push piece into valid position if it collides with wall
             let newPieceCells = newPiece.cells.map {
                 (currentPiecePosition.row + $0.0, currentPiecePosition.col + $0.1)
@@ -191,7 +192,6 @@ class TetrisModel: ObservableObject {
             }
         }
         updateGrid()
-        print("Rotated piece to: \(currentPiecePosition) with orientation \(currentPiece.orientation)")
     }
 
     func solidifyPiece() {
