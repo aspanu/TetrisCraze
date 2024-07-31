@@ -8,7 +8,6 @@
 import XCTest
 
 class TetrisUITests: XCTestCase {
-
     var app: XCUIApplication!
 
     override func setUp() {
@@ -22,16 +21,16 @@ class TetrisUITests: XCTestCase {
         app = nil
         super.tearDown()
     }
-    
+
     func simulateKeyPress(key: CGKeyCode) {
         let source = CGEventSource(stateID: .hidSystemState)
         let keyDown = CGEvent(keyboardEventSource: source, virtualKey: key, keyDown: true)
         let keyUp = CGEvent(keyboardEventSource: source, virtualKey: key, keyDown: false)
-        
+
         keyDown?.post(tap: .cghidEventTap)
         keyUp?.post(tap: .cghidEventTap)
     }
-    
+
     func testMovePieceDown() {
         let initialLabel = app.staticTexts["Score: 0"]
         XCTAssertTrue(initialLabel.exists)

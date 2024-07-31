@@ -11,36 +11,42 @@ struct TetrisView: View {
     @ObservedObject var model = TetrisModel()
 
     var body: some View {
-        HStack{
-            VStack(spacing: 0) {
+        HStack {
+            VStack(spacing: 1) {
                 ForEach(0..<model.grid.count, id: \.self) { row in
-                    HStack(spacing: 0) {
+                    HStack(spacing: 1) {
                         ForEach(0..<model.grid[row].count, id: \.self) { column in
                             Rectangle()
                                 .fill(self.colour(for: model.grid[row][column]))
-                                .frame(width: 15, height: 15)
-                                .border(Color.white, width: 0.5)
+                                .frame(width: 30, height: 30)
+                                .border(Color.white.opacity(0.3), width: 0.5)
                         }
                     }
                 }
             }
+            .background(Color.black.opacity(0.5))
+            .border(Color.black, width: 1)
+            .padding()
+            
             VStack {
                 Text("Score: \(model.score)")
                     .font(.largeTitle)
+                    .foregroundColor(.white)
                     .padding()
-                
+                    .background(Color.black.opacity(0.5))
+                    .cornerRadius(10)
+
                 Spacer()
             }
         }
-        .border(Color.black, width: 1)
-        .padding()
+        .background(Color.gray.edgesIgnoringSafeArea(.all))
         .overlay(
             KeyEventHandlingView { event in
                 self.handleKeyEvent(event)
             }
             .frame(width: 0, height: 0)
         )
-        
+
         if model.gameOver {
             Text("Game Over")
                 .font(.largeTitle)
@@ -56,18 +62,18 @@ struct TetrisView: View {
                     .cornerRadius(10)
             }
         }
-        
     }
 
     private func colour(for block: TetrisBlock) -> Color {
         switch block {
         case .empty:
-            return Color.gray
+            return Color.gray.opacity(0.2)
         case .filled(let color):
             return color
         }
     }
-
+    
+    
     private func handleKeyEvent(_ event: NSEvent) {
         switch event.keyCode {
         case 123:

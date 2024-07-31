@@ -1,5 +1,5 @@
 //
-//  TetrisPiece.swift
+//  TetrisDataModel.swift
 //  TetrisSwiftUI
 //
 //  Created by Adrian on 2024-07-29.
@@ -10,8 +10,7 @@ import SwiftUI
 
 struct TetrisPiece {
     enum Shape {
-        case line
-        // Add other shapes here as needed
+        case I, O, T, L, J, S, Z
     }
 
     enum Orientation {
@@ -23,15 +22,71 @@ struct TetrisPiece {
 
     var cells: [(Int, Int)] {
         switch shape {
-        case .line:
+        case .I:
             switch orientation {
             case .north, .south:
                 return [(0, 0), (1, 0), (2, 0), (3, 0)]
             case .east, .west:
                 return [(0, 0), (0, 1), (0, 2), (0, 3)]
             }
+        case .O:
+            return [(0, 0), (0, 1), (1, 0), (1, 1)]
+        case .T:
+            switch orientation {
+            case .north:
+                return [(0, 1), (1, 0), (1, 1), (1, 2)]
+            case .south:
+                return [(0, 0), (0, 1), (0, 2), (1, 1)]
+            case .east:
+                return [(0, 1), (1, 1), (2, 1), (1, 0)]
+            case .west:
+                return [(0, 1), (1, 1), (2, 1), (1, 2)]
+            }
+        case .L:
+            switch orientation {
+            case .north:
+                return [(0, 0), (1, 0), (2, 0), (2, 1)]
+            case .south:
+                return [(0, 0), (0, 1), (1, 1), (2, 1)]
+            case .east:
+                return [(0, 0), (0, 1), (0, 2), (1, 0)]
+            case .west:
+                return [(0, 2), (1, 0), (1, 1), (1, 2)]
+            }
+        case .J:
+            switch orientation {
+            case .north:
+                return [(2, 0), (0, 1), (1, 1), (2, 1)]
+            case .south:
+                return [(0, 0), (1, 0), (2, 0), (0, 1)]
+            case .east:
+                return [(0, 0), (1, 0), (1, 1), (1, 2)]
+            case .west:
+                return [(0, 0), (0, 1), (0, 2), (1, 2)]
+            }
+        case .S:
+            switch orientation {
+            case .north, .south:
+                return [(0, 1), (0, 2), (1, 0), (1, 1)]
+            case .east, .west:
+                return [(0, 0), (1, 0), (1, 1), (2, 1)]
+            }
+        case .Z:
+            switch orientation {
+            case .north, .south:
+                return [(0, 0), (0, 1), (1, 1), (1, 2)]
+            case .east, .west:
+                return [(0, 1), (1, 0), (1, 1), (2, 0)]
+            }
         }
     }
+    
+    static let nextOrientation: [Orientation: Orientation] = [
+        .north: .east,
+        .east: .south,
+        .south: .west,
+        .west: .north,
+    ]
 }
 
 enum MoveDirection {

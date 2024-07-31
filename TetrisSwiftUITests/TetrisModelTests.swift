@@ -5,11 +5,10 @@
 //  Created by Adrian on 2024-07-29.
 //
 
-import XCTest
 @testable import TetrisSwiftUI
+import XCTest
 
 class TetrisModelTests: XCTestCase {
-    
     var model: TetrisModel!
 
     override func setUp() {

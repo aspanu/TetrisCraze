@@ -11,14 +11,16 @@ import SwiftUI
 class TetrisModel: ObservableObject {
     @Published var grid: [[TetrisBlock]] =
         Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
-    @Published var currentPiece: TetrisPiece = .init(shape: .line, orientation: .north)
+    @Published var currentPiece: TetrisPiece = .init(shape: .I, orientation: .north)
     @Published var currentPiecePosition: (row: Int, col: Int) = (0, 0)
     @Published var currentPieceColour: Color = TetrisConstants.activePieceColour
     @Published var score: Int = 0
+    @Published var totalLinesCleared: Int = 0
     @Published var gameOver: Bool = false
-    
+
     private var gameTimer: Timer?
     private var gameInterval: TimeInterval = 1.0
+    private var tetrisStreak: Int = 0
 
     init() {
         startGame()
@@ -28,7 +30,7 @@ class TetrisModel: ObservableObject {
         resetGame()
         startGameTimer()
     }
-        
+
     func resetGame() {
         grid = Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
         score = 0
@@ -38,31 +40,41 @@ class TetrisModel: ObservableObject {
 
     func startGameTimer() {
         gameTimer = Timer.scheduledTimer(withTimeInterval: gameInterval, repeats: true) {
-            [weak self] (timer: Timer) in
+            [weak self] (_: Timer) in
             self?.gameLoop()
         }
     }
-    
+
     func stopGameTimer() {
         gameTimer?.invalidate()
         gameTimer = nil
     }
-    
+
     func gameLoop() {
         if !gameOver {
             movePieceDown()
-            adjustGameInterval()
         }
     }
-    
+
     func adjustGameInterval() {
-        gameInterval = max(0.1, 1.0 - Double(score) * 0.1)
-        stopGameTimer()
-        startGameTimer()
+        let level = score / 10
+        let A: Double = 0.95 // Initial interval minus the minimum interval
+        let k: Double = 0.15 // Decay rate
+        let C: Double = 0.05 // Minimum interval
+
+        let newInterval = A * exp(-k * Double(level)) + C
+
+        if newInterval != gameInterval {
+            gameInterval = newInterval
+            stopGameTimer()
+            startGameTimer()
+        }
     }
-    
+
     func spawnPiece() {
-        currentPiece = TetrisPiece(shape: .line, orientation: .north)
+        let shapes: [TetrisPiece.Shape] = [.I, .O, .T, .L, .J, .S, .Z]
+        let randomShape = shapes.randomElement()!
+        currentPiece = TetrisPiece(shape: randomShape, orientation: .north)
         currentPiecePosition = (0, (TetrisConstants.width / 2) - 1)
         if !isPieceValid(at: currentPiecePosition, piece: currentPiece) {
             print("Piece is invalid")
@@ -73,7 +85,6 @@ class TetrisModel: ObservableObject {
             updateGrid()
         }
     }
-
 
     func updateGrid() {
         // Reset the grid to empty
@@ -122,7 +133,7 @@ class TetrisModel: ObservableObject {
     func movePieceRight() {
         movePiece(.right)
     }
-    
+
     func dropPiece() {
         print("Dropping piece")
         while isPieceValid(at: (currentPiecePosition.row + 1, currentPiecePosition.col), piece: currentPiece) {
@@ -148,16 +159,8 @@ class TetrisModel: ObservableObject {
     }
 
     func rotatePiece() {
-        let newOrientation: TetrisPiece.Orientation
-        switch currentPiece.orientation {
-        case .north:
-            newOrientation = .east
-        case .east:
-            newOrientation = .south
-        case .south:
-            newOrientation = .west
-        case .west:
-            newOrientation = .north
+        guard let newOrientation = TetrisPiece.nextOrientation[currentPiece.orientation] else {
+            fatalError("Invalid orientation mapping for \(currentPiece.orientation)")
         }
 
         let newPiece = TetrisPiece(shape: currentPiece.shape, orientation: newOrientation)
@@ -209,7 +212,7 @@ class TetrisModel: ObservableObject {
     func clearLines() {
         var newGrid = grid.filter { row in
             !row.allSatisfy {
-                if case .filled(_) = $0 {
+                if case .filled = $0 {
                     return true
                 }
                 return false
@@ -218,12 +221,38 @@ class TetrisModel: ObservableObject {
 
         // Add empty rows at the top of the grid
         let linesCleared = TetrisConstants.height - newGrid.count
-        score += linesCleared
+        let scoreAdded = calculateScore(for: linesCleared)
+        totalLinesCleared += linesCleared
+        score += scoreAdded
+        if linesCleared > 0 && linesCleared % 10 == 0 {
+            adjustGameInterval()
+        }
         let emptyRow = Array(repeating: TetrisBlock.empty, count: TetrisConstants.width)
         for _ in 0..<linesCleared {
             newGrid.insert(emptyRow, at: 0)
         }
-        
+
         grid = newGrid
     }
+    
+    func calculateScore(for lines: Int)-> Int {
+        switch lines {
+        case 1:
+            tetrisStreak = 0
+            return 100
+        case 2:
+            tetrisStreak = 0
+            return 300
+        case 3:
+            tetrisStreak = 0
+            return 500
+        case 4:
+            tetrisStreak += 1
+            return 800 + (tetrisStreak * 400)
+        default:
+            tetrisStreak = 0
+            return 0
+        }
+    }
+
 }
