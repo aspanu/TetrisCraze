@@ -19,6 +19,13 @@ struct TetrisPiece {
 
     let shape: Shape
     var orientation: Orientation
+    let colour: Color
+    
+    init(shape: Shape, orientation: Orientation) {
+        self.shape = shape
+        self.orientation = orientation
+        self.colour = TetrisPiece.shapeColors[shape] ?? .gray // Default to gray if not found
+    }
 
     var cells: [(Int, Int)] {
         switch shape {
@@ -81,6 +88,16 @@ struct TetrisPiece {
         }
     }
     
+    static let shapeColors: [Shape: Color] = [
+        .I: .cyan,
+        .O: .yellow,
+        .T: .pink,
+        .L: .orange,
+        .J: .blue,
+        .S: .green,
+        .Z: .red
+    ]
+    
     static let nextOrientation: [Orientation: Orientation] = [
         .north: .east,
         .east: .south,
@@ -121,4 +138,10 @@ enum TetrisBlock: Identifiable, Equatable {
             return false
         }
     }
+}
+
+enum TetrisConstants {
+    static let height = 20 // Number of rows
+    static let width = 10 // Number of columns
+    static let staticPieceColour: Color = .purple
 }

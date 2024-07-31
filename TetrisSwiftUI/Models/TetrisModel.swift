@@ -13,7 +13,6 @@ class TetrisModel: ObservableObject {
         Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
     @Published var currentPiece: TetrisPiece = .init(shape: .I, orientation: .north)
     @Published var currentPiecePosition: (row: Int, col: Int) = (0, 0)
-    @Published var currentPieceColour: Color = TetrisConstants.activePieceColour
     @Published var score: Int = 0
     @Published var totalLinesCleared: Int = 0
     @Published var gameOver: Bool = false
@@ -77,11 +76,9 @@ class TetrisModel: ObservableObject {
         currentPiece = TetrisPiece(shape: randomShape, orientation: .north)
         currentPiecePosition = (0, (TetrisConstants.width / 2) - 1)
         if !isPieceValid(at: currentPiecePosition, piece: currentPiece) {
-            print("Piece is invalid")
             gameOver = true
             stopGameTimer()
         } else {
-            print("Piece is")
             updateGrid()
         }
     }
@@ -90,7 +87,7 @@ class TetrisModel: ObservableObject {
         // Reset the grid to empty
         for row in 0..<TetrisConstants.height {
             for col in 0..<TetrisConstants.width {
-                if case .filled(let color) = grid[row][col], color == TetrisConstants.activePieceColour {
+                if case .filled(let color) = grid[row][col], color == currentPiece.colour {
                     grid[row][col] = .empty
                 }
             }
@@ -100,7 +97,7 @@ class TetrisModel: ObservableObject {
             let row = currentPiecePosition.row + cell.0
             let col = currentPiecePosition.col + cell.1
             if row >= 0 && row < TetrisConstants.height && col >= 0 && col < TetrisConstants.width {
-                grid[row][col] = .filled(currentPieceColour)
+                grid[row][col] = .filled(currentPiece.colour)
             }
         }
     }
@@ -135,10 +132,10 @@ class TetrisModel: ObservableObject {
     }
 
     func dropPiece() {
-        print("Dropping piece")
         while isPieceValid(at: (currentPiecePosition.row + 1, currentPiecePosition.col), piece: currentPiece) {
             currentPiecePosition.row += 1
         }
+        updateGrid()
         solidifyPiece()
         spawnPiece()
     }
@@ -150,7 +147,7 @@ class TetrisModel: ObservableObject {
                 print("Piece out of bounds at (\(row), \(col))")
                 return false
             }
-            if case .filled(let color) = grid[row][col], color != TetrisConstants.activePieceColour {
+            if case .filled(let color) = grid[row][col], color == TetrisConstants.staticPieceColour {
                 print("Piece collision at (\(row), \(col))")
                 return false
             }
