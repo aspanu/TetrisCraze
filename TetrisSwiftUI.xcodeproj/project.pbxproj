@@ -14,12 +14,15 @@
 		86C292952C57542B002E3F97 /* TetrisSwiftUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292942C57542B002E3F97 /* TetrisSwiftUITests.swift */; };
 		86C2929F2C57542B002E3F97 /* TetrisSwiftUIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C2929E2C57542B002E3F97 /* TetrisSwiftUIUITests.swift */; };
 		86C292A12C57542B002E3F97 /* TetrisSwiftUIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292A02C57542B002E3F97 /* TetrisSwiftUIUITestsLaunchTests.swift */; };
-		86C292B02C575539002E3F97 /* TetrisModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292AF2C575539002E3F97 /* TetrisModel.swift */; };
 		86C292B22C57557A002E3F97 /* TetrisView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292B12C57557A002E3F97 /* TetrisView.swift */; };
 		86C292B42C5756B1002E3F97 /* KeyEventHandlingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292B32C5756B1002E3F97 /* KeyEventHandlingView.swift */; };
 		86C292B82C576737002E3F97 /* TetrisDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292B72C576737002E3F97 /* TetrisDataModel.swift */; };
 		86C292BC2C577532002E3F97 /* TetrisModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292BB2C577532002E3F97 /* TetrisModelTests.swift */; };
 		86C292C02C577588002E3F97 /* TetrisUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292BD2C577579002E3F97 /* TetrisUITests.swift */; };
+		86C292C22C5A45A5002E3F97 /* TetrisGameLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292C12C5A45A5002E3F97 /* TetrisGameLogic.swift */; };
+		86C292C42C5A45F0002E3F97 /* TetrisGameLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292C32C5A45F0002E3F97 /* TetrisGameLoop.swift */; };
+		86C292C62C5A4814002E3F97 /* TetrisGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292C52C5A4814002E3F97 /* TetrisGame.swift */; };
+		86C292C92C5A48F2002E3F97 /* ExternalInputHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292C82C5A48F2002E3F97 /* ExternalInputHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,12 +54,15 @@
 		86C2929A2C57542B002E3F97 /* TetrisSwiftUIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TetrisSwiftUIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C2929E2C57542B002E3F97 /* TetrisSwiftUIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisSwiftUIUITests.swift; sourceTree = "<group>"; };
 		86C292A02C57542B002E3F97 /* TetrisSwiftUIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisSwiftUIUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		86C292AF2C575539002E3F97 /* TetrisModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisModel.swift; sourceTree = "<group>"; };
 		86C292B12C57557A002E3F97 /* TetrisView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisView.swift; sourceTree = "<group>"; };
 		86C292B32C5756B1002E3F97 /* KeyEventHandlingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyEventHandlingView.swift; sourceTree = "<group>"; };
 		86C292B72C576737002E3F97 /* TetrisDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisDataModel.swift; sourceTree = "<group>"; };
 		86C292BB2C577532002E3F97 /* TetrisModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TetrisModelTests.swift; path = TetrisSwiftUITests/TetrisModelTests.swift; sourceTree = SOURCE_ROOT; };
 		86C292BD2C577579002E3F97 /* TetrisUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TetrisUITests.swift; path = TetrisSwiftUIUITests/TetrisUITests.swift; sourceTree = SOURCE_ROOT; };
+		86C292C12C5A45A5002E3F97 /* TetrisGameLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisGameLogic.swift; sourceTree = "<group>"; };
+		86C292C32C5A45F0002E3F97 /* TetrisGameLoop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisGameLoop.swift; sourceTree = "<group>"; };
+		86C292C52C5A4814002E3F97 /* TetrisGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisGame.swift; sourceTree = "<group>"; };
+		86C292C82C5A48F2002E3F97 /* ExternalInputHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternalInputHandler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +113,7 @@
 		86C292812C57542A002E3F97 /* TetrisSwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				86C292C72C5A48B3002E3F97 /* Helpers */,
 				86C292AE2C57551C002E3F97 /* Views */,
 				86C292AD2C575515002E3F97 /* Models */,
 				86C292822C57542A002E3F97 /* TetrisSwiftUIApp.swift */,
@@ -148,8 +155,8 @@
 		86C292AD2C575515002E3F97 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				86C292AF2C575539002E3F97 /* TetrisModel.swift */,
 				86C292B72C576737002E3F97 /* TetrisDataModel.swift */,
+				86C292C52C5A4814002E3F97 /* TetrisGame.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -161,6 +168,16 @@
 				86C292B32C5756B1002E3F97 /* KeyEventHandlingView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		86C292C72C5A48B3002E3F97 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				86C292C12C5A45A5002E3F97 /* TetrisGameLogic.swift */,
+				86C292C32C5A45F0002E3F97 /* TetrisGameLoop.swift */,
+				86C292C82C5A48F2002E3F97 /* ExternalInputHandler.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,10 +350,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				86C292B42C5756B1002E3F97 /* KeyEventHandlingView.swift in Sources */,
+				86C292C62C5A4814002E3F97 /* TetrisGame.swift in Sources */,
 				86C292852C57542A002E3F97 /* ContentView.swift in Sources */,
 				86C292B22C57557A002E3F97 /* TetrisView.swift in Sources */,
+				86C292C92C5A48F2002E3F97 /* ExternalInputHandler.swift in Sources */,
 				86C292B82C576737002E3F97 /* TetrisDataModel.swift in Sources */,
-				86C292B02C575539002E3F97 /* TetrisModel.swift in Sources */,
+				86C292C22C5A45A5002E3F97 /* TetrisGameLogic.swift in Sources */,
+				86C292C42C5A45F0002E3F97 /* TetrisGameLoop.swift in Sources */,
 				86C292832C57542A002E3F97 /* TetrisSwiftUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

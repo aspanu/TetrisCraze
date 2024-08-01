@@ -145,3 +145,26 @@ enum TetrisConstants {
     static let width = 10 // Number of columns
     static let staticPieceColour: Color = .purple
 }
+
+struct GameState {
+    var grid: [[TetrisBlock]]
+    var currentPiece: TetrisPiece
+    var currentPiecePosition: (row: Int, col: Int)
+    var gameOver: Bool
+    var score: Int
+    var totalLinesCleared: Int
+    var tetrisStreak: Int
+    var gameTimer: Timer?
+    var gameInterval: TimeInterval
+
+    init() {
+        self.grid = Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
+        self.currentPiece = TetrisPiece(shape: .I, orientation: .north)
+        self.currentPiecePosition = (0, 0)
+        self.gameOver = false
+        self.score = 0
+        self.totalLinesCleared = 0
+        self.tetrisStreak = 0
+        self.gameInterval = 0.95
+    }
+}
