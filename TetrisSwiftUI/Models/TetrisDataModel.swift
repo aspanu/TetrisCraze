@@ -146,25 +146,40 @@ enum TetrisConstants {
     static let staticPieceColour: Color = .purple
 }
 
-struct GameState {
-    var grid: [[TetrisBlock]]
-    var currentPiece: TetrisPiece
-    var currentPiecePosition: (row: Int, col: Int)
-    var gameOver: Bool
-    var score: Int
-    var totalLinesCleared: Int
+class GameState: ObservableObject {
+    static let shared = GameState()
+    
+    @Published var grid: [[TetrisBlock]]
+    @Published var currentPiece: TetrisPiece
+    @Published var currentPiecePosition: (row: Int, col: Int)
+    @Published var score: Int
+    @Published var totalLinesCleared: Int
+    @Published var gameInterval: TimeInterval
+    @Published var gameTimer: Timer?
+    @Published var gameOver: Bool
     var tetrisStreak: Int
-    var gameTimer: Timer?
-    var gameInterval: TimeInterval
 
-    init() {
+    private init() {
         self.grid = Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
         self.currentPiece = TetrisPiece(shape: .I, orientation: .north)
-        self.currentPiecePosition = (0, 0)
-        self.gameOver = false
+        self.currentPiecePosition = (0, (TetrisConstants.width / 2) - 1)
         self.score = 0
         self.totalLinesCleared = 0
+        self.gameInterval = 1.0
+        self.gameTimer = nil
+        self.gameOver = false
         self.tetrisStreak = 0
-        self.gameInterval = 0.95
+    }
+    
+    func reset() {
+        self.grid = Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
+        self.currentPiece = TetrisPiece(shape: .I, orientation: .north)
+        self.currentPiecePosition = (0, (TetrisConstants.width / 2) - 1)
+        self.score = 0
+        self.totalLinesCleared = 0
+        self.gameInterval = 1.0
+        self.gameTimer = nil
+        self.gameOver = false
+        self.tetrisStreak = 0
     }
 }

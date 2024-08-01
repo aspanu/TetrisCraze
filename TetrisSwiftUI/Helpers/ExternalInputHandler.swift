@@ -8,23 +8,27 @@
 import SwiftUI
 
 class ExternalInputHandler {
-    func handleKeyEvent(_ event: NSEvent, state: inout GameState) {
+    func handleKeyEvent(_ event: NSEvent) {
+        if (GameState.shared.gameOver) {
+            // Handle game over
+            return
+        }
         switch event.keyCode {
         case 123:
             // Left arrow
-            TetrisGameLogic.movePieceLeft(state: &state)
+            TetrisGameLogic.movePieceLeft()
         case 124:
             // Right arrow
-            TetrisGameLogic.movePieceRight(state: &state)
+            TetrisGameLogic.movePieceRight()
         case 125:
             // Down arrow
-            TetrisGameLogic.movePieceDown(state: &state)
+            TetrisGameLogic.movePieceDown()
         case 126:
             // Up arrow
-            TetrisGameLogic.rotatePiece(state: &state)
+            TetrisGameLogic.rotatePiece()
         case 49:
             // Spacebar
-            TetrisGameLogic.dropPiece(state: &state)
+            TetrisGameLogic.dropPiece()
         case 35:
             // 'P' key for pause
             TetrisGame.shared.togglePause()

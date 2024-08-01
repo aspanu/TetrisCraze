@@ -11,158 +11,151 @@ import SwiftUI
 
 struct TetrisGameLogic {
     
-    static func spawnPiece(state: inout GameState) {
-        if state.gameOver {
-            return
-        }
+    static func spawnPiece() {
         let shapes: [TetrisPiece.Shape] = [.I, .O, .T, .L, .J, .S, .Z]
         let randomShape = shapes.randomElement()!
         let newPiece = TetrisPiece(shape: randomShape, orientation: .north)
         let newPosition = (0, (TetrisConstants.width / 2) - 1)
-        if !isPieceValid(at: newPosition, piece: newPiece, state: state) {
-            state.gameOver = true
+        if !isPieceValid(at: newPosition, piece: newPiece) {
+            GameState.shared.gameOver = true
         } else {
-            state.currentPiece = newPiece
-            state.currentPiecePosition = newPosition
-            updateGrid(state: &state)
+            GameState.shared.currentPiece = newPiece
+            GameState.shared.currentPiecePosition = newPosition
+            updateGrid()
         }
     }
     
-    static func updateGrid(state: inout GameState) {
-        print("Updating the grid!")
+    static func updateGrid() {
         // Clear the grid
         for row in 0..<TetrisConstants.height {
             for col in 0..<TetrisConstants.width {
-                if case .filled(let color) = state.grid[row][col], color == state.currentPiece.colour {
-                    state.grid[row][col] = .empty
+                if case .filled(let color) = GameState.shared.grid[row][col], color == GameState.shared.currentPiece.colour {
+                    GameState.shared.grid[row][col] = .empty
                 }
             }
         }
 
         // Update the grid with the current piece's new position
-        for cell in state.currentPiece.cells {
-            let row = state.currentPiecePosition.row + cell.0
-            let col = state.currentPiecePosition.col + cell.1
+        for cell in GameState.shared.currentPiece.cells {
+            let row = GameState.shared.currentPiecePosition.row + cell.0
+            let col = GameState.shared.currentPiecePosition.col + cell.1
             if row >= 0 && row < TetrisConstants.height && col >= 0 && col < TetrisConstants.width {
-                state.grid[row][col] = .filled(state.currentPiece.colour)
+                GameState.shared.grid[row][col] = .filled(GameState.shared.currentPiece.colour)
             }
         }
     }
     
-    static func movePiece(_ direction: MoveDirection, state: inout GameState) {
-        let newPosition = direction.transform(state.currentPiecePosition.row, state.currentPiecePosition.col)
+    static func movePiece(_ direction: MoveDirection) {
+        let newPosition = direction.transform(GameState.shared.currentPiecePosition.row, GameState.shared.currentPiecePosition.col)
 
-        if isPieceValid(at: newPosition, piece: state.currentPiece, state: state) {
-            state.currentPiecePosition = newPosition
-            updateGrid(state: &state)
+        if isPieceValid(at: newPosition, piece: GameState.shared.currentPiece) {
+            GameState.shared.currentPiecePosition = newPosition
+            updateGrid()
         } else {
             // If moving down and it's not valid, it means the piece has landed
             if direction == .down {
-                solidifyPiece(state: &state)
-                let linesCleared = clearLinesFromGrid(state: &state)
+                solidifyPiece()
+                let linesCleared = clearLinesFromGrid()
                 if linesCleared > 0 {
-                    GameLoopLogic.updateScoreAndInterval(linesCleared: linesCleared, state: &state)
+                    GameLoop.updateScoreAndInterval(linesCleared: linesCleared)
                 }
-                spawnPiece(state: &state)
+                spawnPiece()
             }
         }
     }
     
-    static func movePieceDown(state: inout GameState) {
-        movePiece(.down, state: &state)
+    static func movePieceDown() {
+        movePiece(.down)
     }
 
-    static func movePieceLeft(state: inout GameState) {
-        print("Moving piece left")
-        movePiece(.left, state: &state)
+    static func movePieceLeft() {
+        movePiece(.left)
     }
 
-    static func movePieceRight(state: inout GameState) {
-        movePiece(.right, state: &state)
+    static func movePieceRight() {
+        movePiece(.right)
     }
 
-    static func dropPiece(state: inout GameState) {
-        while isPieceValid(at: (state.currentPiecePosition.row + 1, state.currentPiecePosition.col), piece: state.currentPiece, state: state) {
-            state.currentPiecePosition.row += 1
+    static func dropPiece() {
+        while isPieceValid(at: (GameState.shared.currentPiecePosition.row + 1, GameState.shared.currentPiecePosition.col), piece: GameState.shared.currentPiece) {
+            GameState.shared.currentPiecePosition.row += 1
         }
-        updateGrid(state: &state)
-        solidifyPiece(state: &state)
-        let linesCleared = clearLinesFromGrid(state: &state)
+        updateGrid()
+        solidifyPiece()
+        let linesCleared = clearLinesFromGrid()
         if linesCleared > 0 {
-            GameLoopLogic.updateScoreAndInterval(linesCleared: linesCleared, state: &state)
+            GameLoop.updateScoreAndInterval(linesCleared: linesCleared)
         }
-        spawnPiece(state: &state)
+        spawnPiece()
     }
 
-    static func isPieceValid(at position: (Int, Int), piece: TetrisPiece, state: GameState) -> Bool {
+    static func isPieceValid(at position: (Int, Int), piece: TetrisPiece) -> Bool {
         let pieceCells = piece.cells.map { (position.0 + $0.0, position.1 + $0.1) }
         for (row, col) in pieceCells {
             if row < 0 || row >= TetrisConstants.height || col < 0 || col >= TetrisConstants.width {
                 return false
             }
-            if case .filled(let color) = state.grid[row][col], color == TetrisConstants.staticPieceColour {
+            if case .filled(let color) = GameState.shared.grid[row][col], color == TetrisConstants.staticPieceColour {
                 return false
             }
         }
         return true
     }
 
-    static func rotatePiece(state: inout GameState) {
-        if (state.gameOver) {
-            return
+    static func rotatePiece() {
+        guard let newOrientation = TetrisPiece.nextOrientation[GameState.shared.currentPiece.orientation] else {
+            fatalError("Invalid orientation mapping for \(GameState.shared.currentPiece.orientation)")
         }
 
-        guard let newOrientation = TetrisPiece.nextOrientation[state.currentPiece.orientation] else {
-            fatalError("Invalid orientation mapping for \(state.currentPiece.orientation)")
-        }
+        let newPiece = TetrisPiece(shape: GameState.shared.currentPiece.shape, orientation: newOrientation)
 
-        let newPiece = TetrisPiece(shape: state.currentPiece.shape, orientation: newOrientation)
-
-        if isPieceValid(at: state.currentPiecePosition, piece: newPiece, state: state) {
-            state.currentPiece = newPiece
+        if isPieceValid(at: GameState.shared.currentPiecePosition, piece: newPiece) {
+            GameState.shared.currentPiece = newPiece
         } else {
             // Attempt to push piece into valid position if it collides with wall
             let newPieceCells = newPiece.cells.map {
-                (state.currentPiecePosition.row + $0.0, state.currentPiecePosition.col + $0.1)
+                (GameState.shared.currentPiecePosition.row + $0.0, GameState.shared.currentPiecePosition.col + $0.1)
             }
             let minCol = newPieceCells.min(by: { $0.1 < $1.1 })?.1 ?? 0
             let maxCol = newPieceCells.max(by: { $0.1 < $1.1 })?.1 ?? 0
             if minCol < 0 {
                 let offset = -minCol
                 let adjustedPieceCells = newPieceCells.map { ($0.0, $0.1 + offset) }
-                if isPieceValid(at: (state.currentPiecePosition.row, state.currentPiecePosition.col + offset), piece: newPiece, state: state) {
-                    state.currentPiecePosition.col += offset
-                    state.currentPiece = newPiece
+                if isPieceValid(at: (GameState.shared.currentPiecePosition.row, GameState.shared.currentPiecePosition.col + offset), piece: newPiece) {
+                    GameState.shared.currentPiecePosition.col += offset
+                    GameState.shared.currentPiece = newPiece
                 } else {
+                    // TODO: Move this to a log
                     print("Adjusted piece still invalid: \(adjustedPieceCells)")
                 }
             } else if maxCol >= TetrisConstants.width {
                 let offset = maxCol - TetrisConstants.width + 1
                 let adjustedPieceCells = newPieceCells.map { ($0.0, $0.1 - offset) }
-                if isPieceValid(at: (state.currentPiecePosition.row, state.currentPiecePosition.col - offset), piece: newPiece, state: state) {
-                    state.currentPiecePosition.col -= offset
-                    state.currentPiece = newPiece
+                if isPieceValid(at: (GameState.shared.currentPiecePosition.row, GameState.shared.currentPiecePosition.col - offset), piece: newPiece) {
+                    GameState.shared.currentPiecePosition.col -= offset
+                    GameState.shared.currentPiece = newPiece
                 } else {
+                    // TODO: Move this to a log
                     print("Adjusted piece still invalid: \(adjustedPieceCells)")
                 }
             }
         }
-        updateGrid(state: &state)
+        updateGrid()
     }
 
-    static func solidifyPiece(state: inout GameState) {
+    static func solidifyPiece() {
         // Change the current piece's color to indicate it is now static
-        for cell in state.currentPiece.cells {
-            let row = state.currentPiecePosition.row + cell.0
-            let col = state.currentPiecePosition.col + cell.1
+        for cell in GameState.shared.currentPiece.cells {
+            let row = GameState.shared.currentPiecePosition.row + cell.0
+            let col = GameState.shared.currentPiecePosition.col + cell.1
             if row >= 0 && row < TetrisConstants.height && col >= 0 && col < TetrisConstants.width {
-                state.grid[row][col] = .filled(TetrisConstants.staticPieceColour)
+                GameState.shared.grid[row][col] = .filled(TetrisConstants.staticPieceColour)
             }
         }
     }
 
-    static func clearLinesFromGrid(state: inout GameState) -> Int {
-        var newGrid = state.grid.filter { row in
+    static func clearLinesFromGrid() -> Int {
+        var newGrid = GameState.shared.grid.filter { row in
             !row.allSatisfy {
                 if case .filled = $0 {
                     return true
@@ -178,7 +171,7 @@ struct TetrisGameLogic {
             newGrid.insert(emptyRow, at: 0)
         }
 
-        state.grid = newGrid
+        GameState.shared.grid = newGrid
 
         return linesCleared
     }

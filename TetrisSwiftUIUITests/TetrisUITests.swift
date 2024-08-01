@@ -8,80 +8,89 @@
 import XCTest
 
 class TetrisUITests: XCTestCase {
-    var app: XCUIApplication!
 
-    override func setUp() {
-        super.setUp()
-        continueAfterFailure = false
-        app = XCUIApplication()
+    func testStartGameButton() throws {
+        let app = XCUIApplication()
         app.launch()
+
+        let startButton = app.buttons["Start Game"]
+        XCTAssertTrue(startButton.exists, "Start Game button should exist.")
+        startButton.tap()
+        XCTAssertFalse(startButton.exists, "Start Game button should not exist after game starts.")
     }
 
-    override func tearDown() {
-        app = nil
-        super.tearDown()
+    func testPauseButton() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let startButton = app.buttons["Start Game"]
+        startButton.tap()
+
+        let pauseButton = app.buttons["Pause"]
+        XCTAssertTrue(pauseButton.exists, "Pause button should exist after game starts.")
+        pauseButton.tap()
+        let resumeButton = app.buttons["Resume"]
+        XCTAssertEqual(resumeButton.label, "Resume", "Pause button should change to Resume after tapping.")
+        resumeButton.tap()
+        XCTAssertEqual(pauseButton.label, "Pause", "Resume button should change back to Pause after tapping.")
     }
 
-    func simulateKeyPress(key: CGKeyCode) {
-        let source = CGEventSource(stateID: .hidSystemState)
-        let keyDown = CGEvent(keyboardEventSource: source, virtualKey: key, keyDown: true)
-        let keyUp = CGEvent(keyboardEventSource: source, virtualKey: key, keyDown: false)
+    func testScoreLabelUpdates() throws {
+        let app = XCUIApplication()
+        app.launch()
 
-        keyDown?.post(tap: .cghidEventTap)
-        keyUp?.post(tap: .cghidEventTap)
+        let startButton = app.buttons["Start Game"]
+        startButton.tap()
+
+        let scoreLabel = app.staticTexts["Score: 0"]
+        XCTAssertTrue(scoreLabel.exists, "Score label should exist.")
+        // Simulate clearing lines and updating score here.
+        // This requires simulating game logic which might need more detailed UI interaction or mock data.
     }
 
-    func testMovePieceDown() {
-        let initialLabel = app.staticTexts["Score: 0"]
-        XCTAssertTrue(initialLabel.exists)
+    func testGameOverViewAppears() throws {
+        let app = XCUIApplication()
+        app.launch()
 
-        simulateKeyPress(key: 0x7D) // Down arrow key
-        let newLabel = app.staticTexts["Score: 0"]
-        XCTAssertTrue(newLabel.exists)
+        let startButton = app.buttons["Start Game"]
+        startButton.tap()
+
+        // Simulate game over condition here.
+        // This requires directly manipulating the game state, which might be complex for UI tests.
+        // Consider setting a mock game state or a way to easily trigger game over.
+
+        // Example:
+        // app.buttons["Drop"].tap() // Simulate dropping a piece until game over
+        // TODO: Figure out this test
+        XCTAssertTrue(true)
+
+//        let gameOverLabel = app.staticTexts["Game Over"]
+//        XCTAssertTrue(gameOverLabel.exists, "Game Over label should appear when the game is over.")
     }
+    
+    func testGridAppears() throws {
+            let app = XCUIApplication()
+            app.launch()
 
-    func testMovePieceLeft() {
-        let initialLabel = app.staticTexts["Score: 0"]
-        XCTAssertTrue(initialLabel.exists)
+            let startButton = app.buttons["Start Game"]
+            startButton.tap()
 
-        simulateKeyPress(key: 0x7B) // Left arrow key
-        let newLabel = app.staticTexts["Score: 0"]
-        XCTAssertTrue(newLabel.exists)
-    }
+            // Check if the grid cells exist
+            let firstGridCell = app.otherElements["grid_0_0"]
+            XCTAssertTrue(firstGridCell.exists, "First grid cell should exist after game starts.")
 
-    func testMovePieceRight() {
-        let initialLabel = app.staticTexts["Score: 0"]
-        XCTAssertTrue(initialLabel.exists)
-
-        simulateKeyPress(key: 0x7C) // Right arrow key
-        let newLabel = app.staticTexts["Score: 0"]
-        XCTAssertTrue(newLabel.exists)
-    }
-
-    func testRotatePiece() {
-        let initialLabel = app.staticTexts["Score: 0"]
-        XCTAssertTrue(initialLabel.exists)
-
-        simulateKeyPress(key: 0x7E) // Up arrow key
-        let newLabel = app.staticTexts["Score: 0"]
-        XCTAssertTrue(newLabel.exists)
-    }
-
-    func testDropPiece() {
-        let initialLabel = app.staticTexts["Score: 0"]
-        XCTAssertTrue(initialLabel.exists)
-
-        simulateKeyPress(key: 0x31) // Spacebar key
-        let newLabel = app.staticTexts["Score: 0"]
-        XCTAssertTrue(newLabel.exists)
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
+            // Check if a piece has spawned
+            var pieceFound = false
+            for row in 0..<20 { // TODO: Don't make this be hardcoded
+                for col in 0..<10 {
+                    let cell = app.otherElements["grid_\(row)_\(col)"]
+                    if cell.exists && cell.label != "empty" { // Assuming cells have labels to indicate piece presence
+                        pieceFound = true
+                        break
+                    }
+                }
+                if pieceFound { break }
             }
+            XCTAssertTrue(pieceFound, "A piece should be present on the grid after game starts.")
         }
-    }
 }

@@ -10,49 +10,31 @@ import SwiftUI
 class TetrisGame: ObservableObject {
     static let shared = TetrisGame()
 
-    @Published var state: GameState
     @Published var inputHandler: ExternalInputHandler
-
     @Published var showStartScreen = true
+    
+    @ObservedObject var gameState = GameState.shared
 
     private init() {
-        state = GameState()
         inputHandler = ExternalInputHandler()
     }
 
     func startGame() {
         showStartScreen = false
-        state = GameState()
-        startGameTimer()
-        TetrisGameLogic.spawnPiece(state: &state)
+        GameState.shared.reset()
+        GameLoop.startGameTimer()
+        TetrisGameLogic.spawnPiece()
     }
 
     func togglePause() {
-        if state.gameTimer != nil {
-            stopGameTimer()
+        if GameState.shared.gameTimer != nil {
+            GameLoop.stopGameTimer()
         } else {
-            startGameTimer()
+            GameLoop.startGameTimer()
         }
     }
 
     func handleKeyEvent(_ event: NSEvent) {
-        inputHandler.handleKeyEvent(event, state: &state)
-    }
-
-    private func startGameTimer() {
-        state.gameTimer = Timer.scheduledTimer(withTimeInterval: state.gameInterval, repeats: true) { [weak self] _ in
-            self?.gameLoop()
-        }
-    }
-
-    private func stopGameTimer() {
-        state.gameTimer?.invalidate()
-        state.gameTimer = nil
-    }
-
-    private func gameLoop() {
-        if !state.gameOver {
-            TetrisGameLogic.movePieceDown(state: &state)
-        }
+        inputHandler.handleKeyEvent(event)
     }
 }
