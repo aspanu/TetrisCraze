@@ -133,7 +133,7 @@ enum TetrisBlock: Identifiable, Equatable {
         switch (lhs, rhs) {
         case (.empty, .empty), (.staticBlock, .staticBlock):
             return true
-        case (.filled(let lhsGradient), .filled(let rhsGradient)):
+            case (.filled(_), .filled(_)):
             return false
         default:
             return false
@@ -144,7 +144,7 @@ enum TetrisBlock: Identifiable, Equatable {
 enum TetrisConstants {
     static let height = 20 // Number of rows
     static let width = 10 // Number of columns
-    static let staticPieceColour: Color = .purple
+    static let staticPieceColour: Color = .mint
 }
 
 class GameState: ObservableObject {

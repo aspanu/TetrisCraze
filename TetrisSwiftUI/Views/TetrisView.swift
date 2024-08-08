@@ -17,11 +17,10 @@ struct TetrisView: View {
                 StartScreenView(startGameAction: tetrisGame.startGame)
             } else {
                 HStack {
-                    GameBoardView(grid: GameState.shared.grid, colour: self.colour)
-
+                    GameBoardView(grid: gameState.grid, colour: self.colour)
                     ScoreAndControlsView(
-                        score: GameState.shared.score,
-                        isPaused: GameState.shared.gameTimer == nil,
+                        score: gameState.score,
+                        isPaused: gameState.gameTimer == nil,
                         togglePauseAction: tetrisGame.togglePause
                     )
                 }
@@ -32,12 +31,12 @@ struct TetrisView: View {
                     .frame(width: 0, height: 0)
                 )
 
-                if GameState.shared.gameOver {
+                if gameState.gameOver {
                     GameOverView(restartGameAction: tetrisGame.startGame)
                 }
             }
         }
-        .background(Color.gray.edgesIgnoringSafeArea(.all))
+        .background(ColourScheme.backgroundGradient.edgesIgnoringSafeArea(.all))
     }
 
     private func colour(for block: TetrisBlock) -> LinearGradient {
@@ -60,8 +59,11 @@ struct StartScreenView: View {
     var body: some View {
         VStack {
             Text("Tetris Game")
-                .font(.largeTitle)
+                .font(.system(size: 50, weight: .bold, design: .rounded))
+                .foregroundColor(.white)
                 .padding()
+                .background(ColourScheme.backgroundGradient)
+                .cornerRadius(15)
 
             Button(action: startGameAction) {
                 Text("Start Game")
@@ -70,8 +72,11 @@ struct StartScreenView: View {
                     .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+                    .shadow(radius: 5)
             }
         }
+        .padding()
+        .background(ColourScheme.backgroundGradient.edgesIgnoringSafeArea(.all))
     }
 }
 
@@ -89,6 +94,7 @@ struct GameBoardView: View {
                             .fill(self.colour(block))
                             .frame(width: 30, height: 30)
                             .border(Color.white.opacity(0.3), width: 0.5)
+                            .cornerRadius(5)
                             .accessibilityIdentifier("grid_\(row)_\(column)")
                             .accessibilityLabel(block == .empty ? "empty" : "filled")
                     }
@@ -98,6 +104,7 @@ struct GameBoardView: View {
         .background(Color.black.opacity(0.5))
         .border(Color.black, width: 1)
         .padding()
+        .shadow(radius: 5)
     }
 }
 
@@ -107,25 +114,28 @@ struct ScoreAndControlsView: View {
     let togglePauseAction: () -> Void
 
     var body: some View {
-        VStack {
+        VStack(alignment: .center, spacing: 20) {
             Text("Score: \(score)")
                 .font(.largeTitle)
+                .fontWeight(.bold)
                 .foregroundColor(.white)
                 .padding()
-                .background(Color.black.opacity(0.5))
+                .background(Color.black.opacity(0.7))
                 .cornerRadius(10)
 
             Button(action: togglePauseAction) {
-                Text(isPaused ? "Resume" : "Pause")
-                    .font(.title)
+                Image(systemName: isPaused ? "play.fill" : "pause.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 40, height: 40)
                     .padding()
                     .background(Color.orange)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+                    .shadow(radius: 5)
             }
-
-            Spacer()
         }
+        .padding()
     }
 }
 
@@ -133,14 +143,15 @@ struct GameOverView: View {
     let restartGameAction: () -> Void
 
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             Text("Game Over")
                 .font(.largeTitle)
+                .fontWeight(.bold)
                 .foregroundColor(.white)
                 .padding()
-                .background(Color.red)
+                .background(Color.red.opacity(0.7))
                 .cornerRadius(10)
-            
+
             Button(action: restartGameAction) {
                 Text("Restart")
                     .font(.title)
@@ -148,11 +159,12 @@ struct GameOverView: View {
                     .background(Color.green)
                     .foregroundColor(.white)
                     .cornerRadius(10)
+                    .shadow(radius: 5)
             }
         }
         .padding()
-        .background(Color.black.opacity(0.75))
-        .cornerRadius(10)
+        .background(Color.black.opacity(0.5))
+        .cornerRadius(15)
     }
 }
 

@@ -23,6 +23,4 @@ struct ColourScheme {
         .S: LinearGradient(gradient: Gradient(colors: [Color.green, Color.yellow]), startPoint: .top, endPoint: .bottom),
         .Z: LinearGradient(gradient: Gradient(colors: [Color.red, Color.purple]), startPoint: .top, endPoint: .bottom)
     ]
-
-    static let staticBlockColour = Color.white
 }

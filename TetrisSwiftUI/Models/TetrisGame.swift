@@ -32,6 +32,7 @@ class TetrisGame: ObservableObject {
         } else {
             GameLoop.startGameTimer()
         }
+        objectWillChange.send()
     }
 
     func handleKeyEvent(_ event: NSEvent) {
