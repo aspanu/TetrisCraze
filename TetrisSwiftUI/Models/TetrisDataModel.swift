@@ -19,12 +19,13 @@ struct TetrisPiece {
 
     let shape: Shape
     var orientation: Orientation
-    let colour: Color
+    var colour: LinearGradient {
+        ColourScheme.pieceColours[shape]!
+    }
     
     init(shape: Shape, orientation: Orientation) {
         self.shape = shape
         self.orientation = orientation
-        self.colour = TetrisPiece.shapeColors[shape] ?? .gray // Default to gray if not found
     }
 
     var cells: [(Int, Int)] {
@@ -122,7 +123,7 @@ enum MoveDirection {
 }
 
 enum TetrisBlock: Identifiable, Equatable {
-    case empty, filled(Color)
+    case empty, staticBlock, filled(LinearGradient)
 
     var id: UUID {
         UUID()
@@ -130,10 +131,10 @@ enum TetrisBlock: Identifiable, Equatable {
 
     static func == (lhs: TetrisBlock, rhs: TetrisBlock) -> Bool {
         switch (lhs, rhs) {
-        case (.empty, .empty):
+        case (.empty, .empty), (.staticBlock, .staticBlock):
             return true
-        case (.filled(let lhsColour), .filled(let rhsColour)):
-            return lhsColour == rhsColour
+        case (.filled(let lhsGradient), .filled(let rhsGradient)):
+            return false
         default:
             return false
         }

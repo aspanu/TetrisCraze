@@ -57,6 +57,6 @@ class TetrisGameLogicTests: XCTestCase {
         TetrisGameLogic.spawnPiece()
         let initialPosition = GameState.shared.currentPiecePosition
         TetrisGameLogic.dropPiece()
-        XCTAssertEqual(GameState.shared.grid[TetrisConstants.height - 1][initialPosition.col], .filled(TetrisConstants.staticPieceColour), "A piece should have been dropped in this column")
+        XCTAssertEqual(GameState.shared.grid[TetrisConstants.height - 1][initialPosition.col], .staticBlock, "A piece should have been dropped in this column")
     }
 }

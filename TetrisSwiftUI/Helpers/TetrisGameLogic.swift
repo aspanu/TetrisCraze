@@ -29,7 +29,7 @@ struct TetrisGameLogic {
         // Clear the grid
         for row in 0..<TetrisConstants.height {
             for col in 0..<TetrisConstants.width {
-                if case .filled(let color) = GameState.shared.grid[row][col], color == GameState.shared.currentPiece.colour {
+                if case .filled = GameState.shared.grid[row][col] {
                     GameState.shared.grid[row][col] = .empty
                 }
             }
@@ -95,7 +95,7 @@ struct TetrisGameLogic {
             if row < 0 || row >= TetrisConstants.height || col < 0 || col >= TetrisConstants.width {
                 return false
             }
-            if case .filled(let color) = GameState.shared.grid[row][col], color == TetrisConstants.staticPieceColour {
+            if case .staticBlock = GameState.shared.grid[row][col] {
                 return false
             }
         }
@@ -149,7 +149,7 @@ struct TetrisGameLogic {
             let row = GameState.shared.currentPiecePosition.row + cell.0
             let col = GameState.shared.currentPiecePosition.col + cell.1
             if row >= 0 && row < TetrisConstants.height && col >= 0 && col < TetrisConstants.width {
-                GameState.shared.grid[row][col] = .filled(TetrisConstants.staticPieceColour)
+                GameState.shared.grid[row][col] = .staticBlock
             }
         }
     }
@@ -157,7 +157,7 @@ struct TetrisGameLogic {
     static func clearLinesFromGrid() -> Int {
         var newGrid = GameState.shared.grid.filter { row in
             !row.allSatisfy {
-                if case .filled = $0 {
+                if case .staticBlock = $0 {
                     return true
                 }
                 return false

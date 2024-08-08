@@ -40,12 +40,14 @@ struct TetrisView: View {
         .background(Color.gray.edgesIgnoringSafeArea(.all))
     }
 
-    private func colour(for block: TetrisBlock) -> Color {
+    private func colour(for block: TetrisBlock) -> LinearGradient {
         switch block {
         case .empty:
-            return Color.gray.opacity(0.2)
-        case .filled(let color):
-            return color
+            return LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.2), Color.gray.opacity(0.5)]), startPoint: .top, endPoint: .bottom)
+        case .staticBlock:
+                return LinearGradient(gradient: Gradient(colors: [TetrisConstants.staticPieceColour]), startPoint: .top, endPoint: .bottom)
+        case .filled(let gradient):
+            return gradient
         }
     }
 }
@@ -75,18 +77,20 @@ struct StartScreenView: View {
 
 struct GameBoardView: View {
     let grid: [[TetrisBlock]]
-    let colour: (TetrisBlock) -> Color
+    let colour: (TetrisBlock) -> LinearGradient
 
     var body: some View {
         VStack(spacing: 1) {
             ForEach(0..<grid.count, id: \.self) { row in
                 HStack(spacing: 1) {
                     ForEach(0..<grid[row].count, id: \.self) { column in
+                        let block = grid[row][column]
                         Rectangle()
-                            .fill(self.colour(grid[row][column]))
+                            .fill(self.colour(block))
                             .frame(width: 30, height: 30)
                             .border(Color.white.opacity(0.3), width: 0.5)
                             .accessibilityIdentifier("grid_\(row)_\(column)")
+                            .accessibilityLabel(block == .empty ? "empty" : "filled")
                     }
                 }
             }
