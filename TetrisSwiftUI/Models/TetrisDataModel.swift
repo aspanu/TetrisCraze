@@ -123,7 +123,7 @@ enum MoveDirection {
 }
 
 enum TetrisBlock: Identifiable, Equatable {
-    case empty, staticBlock, filled(LinearGradient)
+    case empty, staticBlock, filled(LinearGradient), outline
 
     var id: UUID {
         UUID()
@@ -131,7 +131,7 @@ enum TetrisBlock: Identifiable, Equatable {
 
     static func == (lhs: TetrisBlock, rhs: TetrisBlock) -> Bool {
         switch (lhs, rhs) {
-        case (.empty, .empty), (.staticBlock, .staticBlock):
+            case (.empty, .empty), (.staticBlock, .staticBlock), (.outline, .outline):
             return true
             case (.filled(_), .filled(_)):
             return false
@@ -145,6 +145,7 @@ enum TetrisConstants {
     static let height = 20 // Number of rows
     static let width = 10 // Number of columns
     static let staticPieceColour: Color = .mint
+    static let outlinePieceColour: Color = .yellow
 }
 
 class GameState: ObservableObject {

@@ -29,9 +29,25 @@ struct TetrisGameLogic {
         // Clear the grid
         for row in 0..<TetrisConstants.height {
             for col in 0..<TetrisConstants.width {
-                if case .filled = GameState.shared.grid[row][col] {
-                    GameState.shared.grid[row][col] = .empty
+                let block = GameState.shared.grid[row][col]
+                
+                // Use a switch statement for cleaner matching
+                switch block {
+                    case .filled, .outline:
+                        GameState.shared.grid[row][col] = .empty
+                    default:
+                        break
                 }
+            }
+        }
+        
+        // Show the outline
+        let dropPosition = calculateDropPosition()
+        for cell in GameState.shared.currentPiece.cells {
+            let row = dropPosition.row + cell.0
+            let col = dropPosition.col + cell.1
+            if row >= 0 && row < TetrisConstants.height && col >= 0 && col < TetrisConstants.width {
+                GameState.shared.grid[row][col] = .outline
             }
         }
 
@@ -74,6 +90,14 @@ struct TetrisGameLogic {
 
     static func movePieceRight() {
         movePiece(.right)
+    }
+    
+    static func calculateDropPosition() -> (row: Int, col: Int) {
+        var dropPosition = GameState.shared.currentPiecePosition
+        while isPieceValid(at: (dropPosition.row + 1, dropPosition.col), piece: GameState.shared.currentPiece) {
+            dropPosition.row += 1
+        }
+        return dropPosition
     }
 
     static func dropPiece() {

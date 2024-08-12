@@ -44,7 +44,9 @@ struct TetrisView: View {
         case .empty:
             return LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.2), Color.gray.opacity(0.5)]), startPoint: .top, endPoint: .bottom)
         case .staticBlock:
-                return LinearGradient(gradient: Gradient(colors: [TetrisConstants.staticPieceColour]), startPoint: .top, endPoint: .bottom)
+            return LinearGradient(gradient: Gradient(colors: [TetrisConstants.staticPieceColour]), startPoint: .top, endPoint: .bottom)
+        case .outline:
+                return LinearGradient(gradient: Gradient(colors: [Color.clear]), startPoint: .top, endPoint: .bottom)
         case .filled(let gradient):
             return gradient
         }
@@ -92,6 +94,7 @@ struct GameBoardView: View {
                         let block = grid[row][column]
                         Rectangle()
                             .fill(self.colour(block))
+                            .overlay(block == .outline ? Rectangle().stroke(TetrisConstants.outlinePieceColour, lineWidth: 4) : nil)
                             .frame(width: 30, height: 30)
                             .border(Color.white.opacity(0.3), width: 0.5)
                             .cornerRadius(5)
