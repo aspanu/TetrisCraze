@@ -19,26 +19,32 @@ struct TetrisView: View {
             if tetrisGame.showStartScreen {
                 StartScreenView(startGameAction: tetrisGame.startGame)
             } else {
-                HStack {
-                    GameBoardView(grid: gameState.grid, colour: self.colour)
-                    ScoreAndControlsView(
-                        score: gameState.score,
-                        level: gameState.totalLinesCleared / 10,
-                        isPaused: gameState.gameTimer == nil,
-                        togglePauseAction: tetrisGame.togglePause
-                    )
-                    Spacer()
-                    ControlGuideView()
-                }
-                .overlay(
-                    KeyEventHandlingView { event in
-                        tetrisGame.handleKeyEvent(event)
+                GeometryReader { geometry in
+                    HStack(spacing: 0) {
+                        GameBoardView(grid: gameState.grid, colour: self.colour)
+                            .frame(width: geometry.size.width * 0.6)
+                        VStack(alignment: .trailing, spacing: 20, content: {
+                            ScoreAndControlsView(
+                                score: gameState.score,
+                                level: gameState.totalLinesCleared / 10,
+                                isPaused: gameState.gameTimer == nil,
+                                togglePauseAction: tetrisGame.togglePause
+                            )
+                            
+                            Spacer()
+                            ControlGuideView()
+                        })
                     }
-                    .frame(width: 0, height: 0)
-                )
-
-                if gameState.gameOver {
-                    GameOverView(restartGameAction: tetrisGame.startGame)
+                    .overlay(
+                        KeyEventHandlingView { event in
+                            tetrisGame.handleKeyEvent(event)
+                        }
+                            .frame(width: 0, height: 0)
+                    )
+                    
+                    if gameState.gameOver {
+                        GameOverView(restartGameAction: tetrisGame.startGame)
+                    }
                 }
             }
         }
@@ -95,37 +101,44 @@ struct ScoreAndControlsView: View {
 
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
-            Text("Score:")
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.black.opacity(0.7))
-                .cornerRadius(10)
-            
-            Text("\(score)")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.black.opacity(0.7))
-                .cornerRadius(10)
-                .frame(maxWidth: .infinity) // Ensuring it doesn't affect the layout as it grows
+            HStack {
+                VStack {
+                    Text("Score:")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.black.opacity(0.7))
+                        .cornerRadius(10)
+                    
+                    Text("\(score)")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.black.opacity(0.7))
+                        .cornerRadius(10)
+                        .frame(maxWidth: .infinity)
+                }
+                VStack {
+                    Text("Level:")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.black.opacity(0.7))
+                        .cornerRadius(10)
 
-            Text("Level:")
-                .font(.title2)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .padding(.top, 20)
-
-            Text("\(level)")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundColor(.white)
-                .padding()
-                .background(Color.black.opacity(0.7))
-                .cornerRadius(10)
-                .frame(maxWidth: .infinity)
+                    Text("\(level)")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding()
+                        .background(Color.black.opacity(0.7))
+                        .cornerRadius(10)
+                        .frame(maxWidth: .infinity)
+                }
+            }
 
             Button(action: togglePauseAction) {
                 Image(systemName: isPaused ? "play.fill" : "pause.fill")
