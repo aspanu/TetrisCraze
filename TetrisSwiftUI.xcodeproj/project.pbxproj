@@ -25,6 +25,7 @@
 		86C292CB2C5B6E8B002E3F97 /* TetrisGameLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292CA2C5B6E8B002E3F97 /* TetrisGameLogicTests.swift */; };
 		86C292CD2C5B6FF0002E3F97 /* TetrisGameLoopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292CC2C5B6FF0002E3F97 /* TetrisGameLoopTests.swift */; };
 		86C292CF2C64B6AB002E3F97 /* ColourScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292CE2C64B6AB002E3F97 /* ColourScheme.swift */; };
+		86C292D12C6A05C5002E3F97 /* StartScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292D02C6A05C5002E3F97 /* StartScreenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		86C292CA2C5B6E8B002E3F97 /* TetrisGameLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisGameLogicTests.swift; sourceTree = "<group>"; };
 		86C292CC2C5B6FF0002E3F97 /* TetrisGameLoopTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetrisGameLoopTests.swift; sourceTree = "<group>"; };
 		86C292CE2C64B6AB002E3F97 /* ColourScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourScheme.swift; sourceTree = "<group>"; };
+		86C292D02C6A05C5002E3F97 /* StartScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +173,7 @@
 			children = (
 				86C292B12C57557A002E3F97 /* TetrisView.swift */,
 				86C292B32C5756B1002E3F97 /* KeyEventHandlingView.swift */,
+				86C292D02C6A05C5002E3F97 /* StartScreenView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -364,6 +367,7 @@
 				86C292CF2C64B6AB002E3F97 /* ColourScheme.swift in Sources */,
 				86C292C22C5A45A5002E3F97 /* TetrisGameLogic.swift in Sources */,
 				86C292C42C5A45F0002E3F97 /* TetrisGameLoop.swift in Sources */,
+				86C292D12C6A05C5002E3F97 /* StartScreenView.swift in Sources */,
 				86C292832C57542A002E3F97 /* TetrisSwiftUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

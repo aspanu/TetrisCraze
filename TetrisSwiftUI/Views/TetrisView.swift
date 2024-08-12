@@ -13,6 +13,9 @@ struct TetrisView: View {
 
     var body: some View {
         ZStack {
+            ColourScheme.backgroundGradient
+                            .edgesIgnoringSafeArea(.all) // Ensure the background gradient covers the entire screen
+            
             if tetrisGame.showStartScreen {
                 StartScreenView(startGameAction: tetrisGame.startGame)
             } else {
@@ -20,9 +23,12 @@ struct TetrisView: View {
                     GameBoardView(grid: gameState.grid, colour: self.colour)
                     ScoreAndControlsView(
                         score: gameState.score,
+                        level: gameState.totalLinesCleared / 10,
                         isPaused: gameState.gameTimer == nil,
                         togglePauseAction: tetrisGame.togglePause
                     )
+                    Spacer()
+                    ControlGuideView()
                 }
                 .overlay(
                     KeyEventHandlingView { event in
@@ -36,7 +42,6 @@ struct TetrisView: View {
                 }
             }
         }
-        .background(ColourScheme.backgroundGradient.edgesIgnoringSafeArea(.all))
     }
 
     private func colour(for block: TetrisBlock) -> LinearGradient {
@@ -50,33 +55,6 @@ struct TetrisView: View {
         case .filled(let gradient):
             return gradient
         }
-    }
-}
-
-struct StartScreenView: View {
-    let startGameAction: () -> Void
-
-    var body: some View {
-        VStack {
-            Text("Tetris Game")
-                .font(.system(size: 50, weight: .bold, design: .rounded))
-                .foregroundColor(.white)
-                .padding()
-                .background(ColourScheme.backgroundGradient)
-                .cornerRadius(15)
-
-            Button(action: startGameAction) {
-                Text("Start Game")
-                    .font(.title)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-                    .shadow(radius: 5)
-            }
-        }
-        .padding()
-        .background(ColourScheme.backgroundGradient.edgesIgnoringSafeArea(.all))
     }
 }
 
@@ -111,18 +89,43 @@ struct GameBoardView: View {
 
 struct ScoreAndControlsView: View {
     let score: Int
+    let level: Int
     let isPaused: Bool
     let togglePauseAction: () -> Void
 
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
-            Text("Score: \(score)")
+            Text("Score:")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.black.opacity(0.7))
+                .cornerRadius(10)
+            
+            Text("\(score)")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
                 .padding()
                 .background(Color.black.opacity(0.7))
                 .cornerRadius(10)
+                .frame(maxWidth: .infinity) // Ensuring it doesn't affect the layout as it grows
+
+            Text("Level:")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .padding(.top, 20)
+
+            Text("\(level)")
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+                .padding()
+                .background(Color.black.opacity(0.7))
+                .cornerRadius(10)
+                .frame(maxWidth: .infinity)
 
             Button(action: togglePauseAction) {
                 Image(systemName: isPaused ? "play.fill" : "pause.fill")
@@ -166,6 +169,38 @@ struct GameOverView: View {
         .padding()
         .background(Color.black.opacity(0.5))
         .cornerRadius(15)
+    }
+}
+
+struct ControlGuideView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Controls")
+                .font(.headline)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+
+            Text("← →: Move Left/Right")
+                .font(.subheadline)
+                .foregroundColor(.white)
+            Text("↑: Rotate Piece")
+                .font(.subheadline)
+                .foregroundColor(.white)
+            Text("↓: Move Down")
+                .font(.subheadline)
+                .foregroundColor(.white)
+            Text("Space: Drop Piece")
+                .font(.subheadline)
+                .foregroundColor(.white)
+            Text("P: Pause Game")
+                .font(.subheadline)
+                .foregroundColor(.white)
+        }
+        .padding()
+        .background(Color.black.opacity(0.7))
+        .cornerRadius(10)
+        .shadow(radius: 5)
+        .padding(.trailing, 20)
     }
 }
 
