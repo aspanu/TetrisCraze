@@ -5,11 +5,10 @@
 //  Created by Adrian on 2024-08-01.
 //
 
-import XCTest
 @testable import TetrisSwiftUI
+import XCTest
 
 class GameLoopTests: XCTestCase {
-
     override func setUpWithError() throws {
         GameState.shared.reset()
     }

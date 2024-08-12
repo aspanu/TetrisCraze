@@ -22,7 +22,7 @@ struct TetrisPiece {
     var colour: LinearGradient {
         ColourScheme.pieceColours[shape]!
     }
-    
+
     init(shape: Shape, orientation: Orientation) {
         self.shape = shape
         self.orientation = orientation
@@ -88,7 +88,7 @@ struct TetrisPiece {
             }
         }
     }
-    
+
     static let shapeColors: [Shape: Color] = [
         .I: .cyan,
         .O: .yellow,
@@ -96,9 +96,9 @@ struct TetrisPiece {
         .L: .orange,
         .J: .blue,
         .S: .green,
-        .Z: .red
+        .Z: .red,
     ]
-    
+
     static let nextOrientation: [Orientation: Orientation] = [
         .north: .east,
         .east: .south,
@@ -131,9 +131,9 @@ enum TetrisBlock: Identifiable, Equatable {
 
     static func == (lhs: TetrisBlock, rhs: TetrisBlock) -> Bool {
         switch (lhs, rhs) {
-            case (.empty, .empty), (.staticBlock, .staticBlock), (.outline, .outline):
+        case (.empty, .empty), (.staticBlock, .staticBlock), (.outline, .outline):
             return true
-            case (.filled(_), .filled(_)):
+        case (.filled(_), .filled(_)):
             return false
         default:
             return false
@@ -150,7 +150,7 @@ enum TetrisConstants {
 
 class GameState: ObservableObject {
     static let shared = GameState()
-    
+
     @Published var grid: [[TetrisBlock]]
     @Published var currentPiece: TetrisPiece
     @Published var currentPiecePosition: (row: Int, col: Int)
@@ -162,26 +162,26 @@ class GameState: ObservableObject {
     var tetrisStreak: Int
 
     private init() {
-        self.grid = Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
-        self.currentPiece = TetrisPiece(shape: .I, orientation: .north)
-        self.currentPiecePosition = (0, (TetrisConstants.width / 2) - 1)
-        self.score = 0
-        self.totalLinesCleared = 0
-        self.gameInterval = 1.0
-        self.gameTimer = nil
-        self.gameOver = false
-        self.tetrisStreak = 0
+        grid = Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
+        currentPiece = TetrisPiece(shape: .I, orientation: .north)
+        currentPiecePosition = (0, (TetrisConstants.width / 2) - 1)
+        score = 0
+        totalLinesCleared = 0
+        gameInterval = 1.0
+        gameTimer = nil
+        gameOver = false
+        tetrisStreak = 0
     }
-    
+
     func reset() {
-        self.grid = Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
-        self.currentPiece = TetrisPiece(shape: .I, orientation: .north)
-        self.currentPiecePosition = (0, (TetrisConstants.width / 2) - 1)
-        self.score = 0
-        self.totalLinesCleared = 0
-        self.gameInterval = 1.0
-        self.gameTimer = nil
-        self.gameOver = false
-        self.tetrisStreak = 0
+        grid = Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
+        currentPiece = TetrisPiece(shape: .I, orientation: .north)
+        currentPiecePosition = (0, (TetrisConstants.width / 2) - 1)
+        score = 0
+        totalLinesCleared = 0
+        gameInterval = 1.0
+        gameTimer = nil
+        gameOver = false
+        tetrisStreak = 0
     }
 }

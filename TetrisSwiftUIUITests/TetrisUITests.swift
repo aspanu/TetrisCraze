@@ -8,7 +8,6 @@
 import XCTest
 
 class TetrisUITests: XCTestCase {
-
     func testStartGameButton() throws {
         let app = XCUIApplication()
         app.launch()
@@ -67,30 +66,30 @@ class TetrisUITests: XCTestCase {
 //        let gameOverLabel = app.staticTexts["Game Over"]
 //        XCTAssertTrue(gameOverLabel.exists, "Game Over label should appear when the game is over.")
     }
-    
+
     func testGridAppears() throws {
-            let app = XCUIApplication()
-            app.launch()
+        let app = XCUIApplication()
+        app.launch()
 
-            let startButton = app.buttons["Start Game"]
-            startButton.tap()
+        let startButton = app.buttons["Start Game"]
+        startButton.tap()
 
-            // Check if the grid cells exist
-            let firstGridCell = app.otherElements["grid_0_0"]
-            XCTAssertTrue(firstGridCell.exists, "First grid cell should exist after game starts.")
+        // Check if the grid cells exist
+        let firstGridCell = app.otherElements["grid_0_0"]
+        XCTAssertTrue(firstGridCell.exists, "First grid cell should exist after game starts.")
 
-            // Check if a piece has spawned
-            var pieceFound = false
-            for row in 0..<20 { // TODO: Don't make this be hardcoded
-                for col in 0..<10 {
-                    let cell = app.otherElements["grid_\(row)_\(col)"]
-                    if cell.exists && cell.label != "empty" { // Assuming cells have labels to indicate piece presence
-                        pieceFound = true
-                        break
-                    }
+        // Check if a piece has spawned
+        var pieceFound = false
+        for row in 0..<20 { // TODO: Don't make this be hardcoded
+            for col in 0..<10 {
+                let cell = app.otherElements["grid_\(row)_\(col)"]
+                if cell.exists && cell.label != "empty" { // Assuming cells have labels to indicate piece presence
+                    pieceFound = true
+                    break
                 }
-                if pieceFound { break }
             }
-            XCTAssertTrue(pieceFound, "A piece should be present on the grid after game starts.")
+            if pieceFound { break }
         }
+        XCTAssertTrue(pieceFound, "A piece should be present on the grid after game starts.")
+    }
 }

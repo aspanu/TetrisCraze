@@ -9,8 +9,7 @@
 
 import SwiftUI
 
-struct TetrisGameLogic {
-    
+enum TetrisGameLogic {
     static func spawnPiece() {
         let shapes: [TetrisPiece.Shape] = [.I, .O, .T, .L, .J, .S, .Z]
         let randomShape = shapes.randomElement()!
@@ -24,29 +23,29 @@ struct TetrisGameLogic {
             updateGrid()
         }
     }
-    
+
     static func updateGrid() {
         // Clear the grid
         for row in 0..<TetrisConstants.height {
             for col in 0..<TetrisConstants.width {
                 let block = GameState.shared.grid[row][col]
-                
+
                 // Use a switch statement for cleaner matching
                 switch block {
-                    case .filled, .outline:
-                        GameState.shared.grid[row][col] = .empty
-                    default:
-                        break
+                case .filled, .outline:
+                    GameState.shared.grid[row][col] = .empty
+                default:
+                    break
                 }
             }
         }
-        
+
         // Show the outline
         let dropPosition = calculateDropPosition()
         for cell in GameState.shared.currentPiece.cells {
             let row = dropPosition.row + cell.0
             let col = dropPosition.col + cell.1
-            if row >= 0 && row < TetrisConstants.height && col >= 0 && col < TetrisConstants.width {
+            if row >= 0, row < TetrisConstants.height, col >= 0, col < TetrisConstants.width {
                 GameState.shared.grid[row][col] = .outline
             }
         }
@@ -55,12 +54,12 @@ struct TetrisGameLogic {
         for cell in GameState.shared.currentPiece.cells {
             let row = GameState.shared.currentPiecePosition.row + cell.0
             let col = GameState.shared.currentPiecePosition.col + cell.1
-            if row >= 0 && row < TetrisConstants.height && col >= 0 && col < TetrisConstants.width {
+            if row >= 0, row < TetrisConstants.height, col >= 0, col < TetrisConstants.width {
                 GameState.shared.grid[row][col] = .filled(GameState.shared.currentPiece.colour)
             }
         }
     }
-    
+
     static func movePiece(_ direction: MoveDirection) {
         let newPosition = direction.transform(GameState.shared.currentPiecePosition.row, GameState.shared.currentPiecePosition.col)
 
@@ -79,7 +78,7 @@ struct TetrisGameLogic {
             }
         }
     }
-    
+
     static func movePieceDown() {
         movePiece(.down)
     }
@@ -91,7 +90,7 @@ struct TetrisGameLogic {
     static func movePieceRight() {
         movePiece(.right)
     }
-    
+
     static func calculateDropPosition() -> (row: Int, col: Int) {
         var dropPosition = GameState.shared.currentPiecePosition
         while isPieceValid(at: (dropPosition.row + 1, dropPosition.col), piece: GameState.shared.currentPiece) {
@@ -172,7 +171,7 @@ struct TetrisGameLogic {
         for cell in GameState.shared.currentPiece.cells {
             let row = GameState.shared.currentPiecePosition.row + cell.0
             let col = GameState.shared.currentPiecePosition.col + cell.1
-            if row >= 0 && row < TetrisConstants.height && col >= 0 && col < TetrisConstants.width {
+            if row >= 0, row < TetrisConstants.height, col >= 0, col < TetrisConstants.width {
                 GameState.shared.grid[row][col] = .staticBlock
             }
         }

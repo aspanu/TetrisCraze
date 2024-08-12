@@ -12,7 +12,7 @@ class TetrisGame: ObservableObject {
 
     @Published var inputHandler: ExternalInputHandler
     @Published var showStartScreen = true
-    
+
     @ObservedObject var gameState = GameState.shared
 
     private init() {

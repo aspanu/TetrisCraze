@@ -10,7 +10,7 @@ import SwiftUI
 struct TetrisView: View {
     @StateObject private var tetrisGame = TetrisGame.shared
     @ObservedObject private var gameState = GameState.shared
-    
+
     var body: some View {
         ZStack {
             if tetrisGame.showStartScreen {
@@ -46,14 +46,12 @@ struct TetrisView: View {
         case .staticBlock:
             return LinearGradient(gradient: Gradient(colors: [TetrisConstants.staticPieceColour]), startPoint: .top, endPoint: .bottom)
         case .outline:
-                return LinearGradient(gradient: Gradient(colors: [Color.clear]), startPoint: .top, endPoint: .bottom)
+            return LinearGradient(gradient: Gradient(colors: [Color.clear]), startPoint: .top, endPoint: .bottom)
         case .filled(let gradient):
             return gradient
         }
     }
 }
-
-
 
 struct StartScreenView: View {
     let startGameAction: () -> Void

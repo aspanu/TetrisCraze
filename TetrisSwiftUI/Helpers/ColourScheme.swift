@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ColourScheme {
+enum ColourScheme {
     static let backgroundGradient = LinearGradient(
         gradient: Gradient(colors: [Color.purple, Color.blue, Color.green, Color.yellow, Color.red]),
         startPoint: .top,
@@ -21,6 +21,6 @@ struct ColourScheme {
         .L: LinearGradient(gradient: Gradient(colors: [Color.orange, Color.red]), startPoint: .top, endPoint: .bottom),
         .J: LinearGradient(gradient: Gradient(colors: [Color.blue, Color.indigo]), startPoint: .top, endPoint: .bottom),
         .S: LinearGradient(gradient: Gradient(colors: [Color.green, Color.yellow]), startPoint: .top, endPoint: .bottom),
-        .Z: LinearGradient(gradient: Gradient(colors: [Color.red, Color.purple]), startPoint: .top, endPoint: .bottom)
+        .Z: LinearGradient(gradient: Gradient(colors: [Color.red, Color.purple]), startPoint: .top, endPoint: .bottom),
     ]
 }

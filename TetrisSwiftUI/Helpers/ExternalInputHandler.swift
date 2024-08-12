@@ -9,7 +9,7 @@ import SwiftUI
 
 class ExternalInputHandler {
     func handleKeyEvent(_ event: NSEvent) {
-        if (GameState.shared.gameOver) {
+        if GameState.shared.gameOver {
             // Handle game over
             return
         }

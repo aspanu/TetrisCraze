@@ -8,13 +8,12 @@
 import Foundation
 import SwiftUI
 
-struct GameLoop {
-    
+enum GameLoop {
     static func updateScoreAndInterval(linesCleared: Int) {
         let scoreAdded = calculateScore(for: linesCleared)
         GameState.shared.totalLinesCleared += linesCleared
         GameState.shared.score += scoreAdded
-        if linesCleared > 0 && GameState.shared.totalLinesCleared % 10 == 0 {
+        if linesCleared > 0, GameState.shared.totalLinesCleared % 10 == 0 {
             adjustGameInterval()
         }
     }
@@ -41,9 +40,9 @@ struct GameLoop {
 
     static func adjustGameInterval() {
         let level = GameState.shared.totalLinesCleared / 10
-        let A: Double = 0.95 // Initial interval minus the minimum interval
-        let k: Double = 0.15 // Decay rate
-        let C: Double = 0.05 // Minimum interval
+        let A = 0.95 // Initial interval minus the minimum interval
+        let k = 0.15 // Decay rate
+        let C = 0.05 // Minimum interval
 
         let newInterval = A * exp(-k * Double(level)) + C
         print("New interval is: \(newInterval)")
@@ -51,7 +50,7 @@ struct GameLoop {
         stopGameTimer()
         startGameTimer()
     }
-    
+
     static func startGameTimer() {
         GameState.shared.gameTimer = Timer.scheduledTimer(withTimeInterval: GameState.shared.gameInterval, repeats: true) { _ in
             gameLoop()
