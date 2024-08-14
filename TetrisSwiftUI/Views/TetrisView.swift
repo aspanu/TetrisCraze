@@ -10,6 +10,9 @@ import SwiftUI
 struct TetrisView: View {
     @StateObject private var tetrisGame = TetrisGame.shared
     @ObservedObject private var gameState = GameState.shared
+    
+    @State private var currentLevel: Int = 0
+    @State private var showLevelUp = false
 
     var body: some View {
         ZStack {
@@ -23,6 +26,22 @@ struct TetrisView: View {
                     HStack(spacing: 0) {
                         GameBoardView(grid: gameState.grid, colour: self.colour)
                             .frame(width: geometry.size.width * 0.6)
+                            .overlay(
+                                ZStack {
+                                    LevelUpView(showLevelUp: $showLevelUp, level: $currentLevel)
+                                }
+                            )
+                            .onChange(
+                                of: gameState.totalLinesCleared) { oldValue, newValue in
+                                    let newLevel = newValue / 10
+                                    let oldLevel = oldValue / 10
+                                    
+                                    if newLevel > oldLevel {
+                                        currentLevel = newLevel
+                                        showLevelUp = true
+                                }
+                            }
+
                         VStack(alignment: .trailing, spacing: 20, content: {
                             ScoreAndControlsView(
                                 score: gameState.score,
@@ -49,7 +68,7 @@ struct TetrisView: View {
             }
         }
     }
-
+    
     private func colour(for block: TetrisBlock) -> LinearGradient {
         switch block {
         case .empty:
@@ -151,6 +170,7 @@ struct ScoreAndControlsView: View {
                     .cornerRadius(10)
                     .shadow(radius: 5)
             }
+            .buttonStyle(PlainButtonStyle())
         }
         .padding()
     }
@@ -178,6 +198,7 @@ struct GameOverView: View {
                     .cornerRadius(10)
                     .shadow(radius: 5)
             }
+            .buttonStyle(PlainButtonStyle())
         }
         .padding()
         .background(Color.black.opacity(0.5))
