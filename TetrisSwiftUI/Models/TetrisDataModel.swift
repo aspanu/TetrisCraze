@@ -105,6 +105,17 @@ struct TetrisPiece {
         .south: .west,
         .west: .north,
     ]
+    
+    var gridRepresentation: [[TetrisBlock]] {
+        let size = 4 // Assume max size for a piece is 4x4
+        var grid = Array(repeating: Array(repeating: TetrisBlock.empty, count: size), count: size)
+
+        for cell in self.cells {
+            grid[cell.0][cell.1] = .filled(self.colour)
+        }
+
+        return grid
+    }
 }
 
 enum MoveDirection {
@@ -144,8 +155,6 @@ enum TetrisBlock: Identifiable, Equatable {
 enum TetrisConstants {
     static let height = 20 // Number of rows
     static let width = 10 // Number of columns
-    static let staticPieceColour: Color = .mint
-    static let outlinePieceColour: Color = .yellow
 }
 
 class GameState: ObservableObject {
@@ -159,6 +168,9 @@ class GameState: ObservableObject {
     @Published var gameInterval: TimeInterval
     @Published var gameTimer: Timer?
     @Published var gameOver: Bool
+    @Published var savedPiece: TetrisPiece? = nil
+    @Published var hasSwitched: Bool = false
+
     var tetrisStreak: Int
 
     private init() {

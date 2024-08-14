@@ -24,8 +24,13 @@ struct TetrisView: View {
             } else {
                 GeometryReader { geometry in
                     HStack(spacing: 0) {
-                        GameBoardView(grid: gameState.grid, colour: self.colour)
-                            .frame(width: geometry.size.width * 0.6)
+                        // Saved Piece Section (20% of the width)
+                        SavedPieceView(savedPiece: gameState.savedPiece)
+                            .frame(width: geometry.size.width * 0.15)
+                            .padding()
+
+                        GameBoardView(grid: gameState.grid, blockSize: 30)
+                            .frame(width: geometry.size.width * 0.5)
                             .overlay(
                                 ZStack {
                                     LevelUpView(showLevelUp: $showLevelUp, level: $currentLevel)
@@ -69,47 +74,6 @@ struct TetrisView: View {
         }
     }
     
-    private func colour(for block: TetrisBlock) -> LinearGradient {
-        switch block {
-        case .empty:
-            return LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.2), Color.gray.opacity(0.5)]), startPoint: .top, endPoint: .bottom)
-        case .staticBlock:
-            return LinearGradient(gradient: Gradient(colors: [TetrisConstants.staticPieceColour]), startPoint: .top, endPoint: .bottom)
-        case .outline:
-            return LinearGradient(gradient: Gradient(colors: [Color.clear]), startPoint: .top, endPoint: .bottom)
-        case .filled(let gradient):
-            return gradient
-        }
-    }
-}
-
-struct GameBoardView: View {
-    let grid: [[TetrisBlock]]
-    let colour: (TetrisBlock) -> LinearGradient
-
-    var body: some View {
-        VStack(spacing: 1) {
-            ForEach(0..<grid.count, id: \.self) { row in
-                HStack(spacing: 1) {
-                    ForEach(0..<grid[row].count, id: \.self) { column in
-                        let block = grid[row][column]
-                        Rectangle()
-                            .fill(self.colour(block))
-                            .overlay(block == .outline ? Rectangle().stroke(TetrisConstants.outlinePieceColour, lineWidth: 4) : nil)
-                            .frame(width: 30, height: 30)
-                            .border(Color.white.opacity(0.3), width: 0.5)
-                            .cornerRadius(5)
-                            .accessibilityIdentifier("grid_\(row)_\(column)")
-                            .accessibilityLabel(block == .empty ? "empty" : "filled")
-                    }
-                }
-            }
-        }
-        .background(Color.black.opacity(0.5))
-        .border(Color.black, width: 1)
-        .padding()
-        .shadow(radius: 5)
-    }
 }
 
 struct ScoreAndControlsView: View {
@@ -227,6 +191,9 @@ struct ControlGuideView: View {
                 .font(.subheadline)
                 .foregroundColor(.white)
             Text("P: Pause Game")
+                .font(.subheadline)
+                .foregroundColor(.white)
+            Text("F: Save/Switch Piece")
                 .font(.subheadline)
                 .foregroundColor(.white)
         }

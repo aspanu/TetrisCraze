@@ -27,6 +27,8 @@
 		86C292CF2C64B6AB002E3F97 /* ColourScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292CE2C64B6AB002E3F97 /* ColourScheme.swift */; };
 		86C292D12C6A05C5002E3F97 /* StartScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292D02C6A05C5002E3F97 /* StartScreenView.swift */; };
 		86C292D32C6C8A4B002E3F97 /* LevelUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292D22C6C8A4B002E3F97 /* LevelUpView.swift */; };
+		86C292D52C6C94F7002E3F97 /* SavedPieceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292D42C6C94F7002E3F97 /* SavedPieceView.swift */; };
+		86C292D72C6C97AD002E3F97 /* GameBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292D62C6C97AD002E3F97 /* GameBoardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		86C292CE2C64B6AB002E3F97 /* ColourScheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourScheme.swift; sourceTree = "<group>"; };
 		86C292D02C6A05C5002E3F97 /* StartScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenView.swift; sourceTree = "<group>"; };
 		86C292D22C6C8A4B002E3F97 /* LevelUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelUpView.swift; sourceTree = "<group>"; };
+		86C292D42C6C94F7002E3F97 /* SavedPieceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedPieceView.swift; sourceTree = "<group>"; };
+		86C292D62C6C97AD002E3F97 /* GameBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				86C292B12C57557A002E3F97 /* TetrisView.swift */,
+				86C292D62C6C97AD002E3F97 /* GameBoardView.swift */,
+				86C292D42C6C94F7002E3F97 /* SavedPieceView.swift */,
 				86C292D22C6C8A4B002E3F97 /* LevelUpView.swift */,
 				86C292B32C5756B1002E3F97 /* KeyEventHandlingView.swift */,
 				86C292D02C6A05C5002E3F97 /* StartScreenView.swift */,
@@ -363,8 +369,10 @@
 			files = (
 				86C292B42C5756B1002E3F97 /* KeyEventHandlingView.swift in Sources */,
 				86C292C62C5A4814002E3F97 /* TetrisGame.swift in Sources */,
+				86C292D52C6C94F7002E3F97 /* SavedPieceView.swift in Sources */,
 				86C292852C57542A002E3F97 /* ContentView.swift in Sources */,
 				86C292B22C57557A002E3F97 /* TetrisView.swift in Sources */,
+				86C292D72C6C97AD002E3F97 /* GameBoardView.swift in Sources */,
 				86C292C92C5A48F2002E3F97 /* ExternalInputHandler.swift in Sources */,
 				86C292B82C576737002E3F97 /* TetrisDataModel.swift in Sources */,
 				86C292CF2C64B6AB002E3F97 /* ColourScheme.swift in Sources */,

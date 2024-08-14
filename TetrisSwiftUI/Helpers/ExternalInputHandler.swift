@@ -32,6 +32,8 @@ class ExternalInputHandler {
         case 35:
             // 'P' key for pause
             TetrisGame.shared.togglePause()
+        case 3: // Key 'f'
+            TetrisGameLogic.saveOrSwitchPiece()
         default:
             break
         }

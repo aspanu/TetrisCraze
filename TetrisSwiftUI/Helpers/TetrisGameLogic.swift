@@ -22,6 +22,7 @@ enum TetrisGameLogic {
             GameState.shared.currentPiecePosition = newPosition
             updateGrid()
         }
+        resetSwitch()
     }
 
     static func updateGrid() {
@@ -198,4 +199,33 @@ enum TetrisGameLogic {
 
         return linesCleared
     }
+    
+    static func saveOrSwitchPiece() {
+        if GameState.shared.hasSwitched {
+            print("Returned early")
+            return // Prevent multiple switches in the same drop
+        }
+
+        if let savedPiece = GameState.shared.savedPiece {
+            // Switch the current piece with the saved piece
+            let tempPiece = GameState.shared.currentPiece
+            GameState.shared.currentPiece = savedPiece
+            GameState.shared.savedPiece = tempPiece
+            GameState.shared.hasSwitched = true
+            print("Finished swapping piece")
+        } else {
+            // Save the current piece and spawn a new one
+            GameState.shared.savedPiece = GameState.shared.currentPiece
+            spawnPiece()
+            print("Finished swapping a brand new piece")
+        }
+
+        updateGrid()
+        print("Finished the save or switch piece!")
+    }
+
+    static func resetSwitch() {
+        GameState.shared.hasSwitched = false
+    }
+
 }
