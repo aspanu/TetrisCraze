@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '14.0'
+    - name: Install Dependencies
+      run: swift package resolve
+    - name: Run Unit Tests
+      run: xcodebuild test -scheme TetrisSwiftUI -destination 'platform=macOS,arch=x86_64'
+    - name: Run UI Tests
+      run: xcodebuild test -scheme TetrisSwiftUIUITests -destination 'platform=macOS'

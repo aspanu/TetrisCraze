@@ -92,4 +92,25 @@ class TetrisUITests: XCTestCase {
         }
         XCTAssertTrue(pieceFound, "A piece should be present on the grid after game starts.")
     }
+    
+    func testSaveAndSwitchPiece() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let startButton = app.buttons["Start Game"]
+        startButton.tap()
+
+        // Simulate saving a piece (e.g., by pressing the "f" key)
+        let initialPiece = app.otherElements["grid_0_0"].label
+        app.keys["f"].tap()
+        
+        // Verify that the piece is saved and a new piece is spawned
+        let savedPiece = app.otherElements["saved_piece_0_0"].label
+        XCTAssertEqual(savedPiece, initialPiece, "The initial piece should be saved.")
+        
+        // Simulate switching back the piece
+        app.keys["f"].tap()
+        let switchedPiece = app.otherElements["grid_0_0"].label
+        XCTAssertEqual(switchedPiece, initialPiece, "The initial piece should be switched back.")
+    }
 }

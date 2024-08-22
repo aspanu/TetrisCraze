@@ -58,4 +58,45 @@ class TetrisGameLogicTests: XCTestCase {
         TetrisGameLogic.dropPiece()
         XCTAssertEqual(GameState.shared.grid[TetrisConstants.height - 1][initialPosition.col], .staticBlock, "A piece should have been dropped in this column")
     }
+    
+    func testClearSingleLine() throws {
+        // Set up the grid with a full line
+        GameState.shared.grid[19] = Array(repeating: .staticBlock, count: TetrisConstants.width)
+        GameState.shared.currentPiecePosition = (19, 0)
+        TetrisGameLogic.solidifyPiece()
+        TetrisGameLogic.clearLinesFromGrid()
+
+        XCTAssertEqual(GameState.shared.grid[19], Array(repeating: .empty, count: TetrisConstants.width), "The line should be cleared.")
+    }
+
+    func testClearMultipleLines() throws {
+        // Set up the grid with multiple full lines
+        GameState.shared.grid[18] = Array(repeating: .staticBlock, count: TetrisConstants.width)
+        GameState.shared.grid[19] = Array(repeating: .staticBlock, count: TetrisConstants.width)
+        TetrisGameLogic.solidifyPiece()
+        TetrisGameLogic.clearLinesFromGrid()
+
+        XCTAssertEqual(GameState.shared.grid[19], Array(repeating: .empty, count: TetrisConstants.width), "The bottom line should be cleared.")
+        XCTAssertEqual(GameState.shared.grid[18], Array(repeating: .empty, count: TetrisConstants.width), "The line above should also be cleared.")
+    }
+    
+    func testGameOverCondition() throws {
+        // Fill the top row
+        GameState.shared.grid[0] = Array(repeating: .staticBlock, count: TetrisConstants.width)
+        TetrisGameLogic.spawnPiece()
+        XCTAssertTrue(GameState.shared.gameOver, "The game should be over when a new piece can't be spawned.")
+    }
+    
+    func testSaveAndSwitchPiece() throws {
+        TetrisGameLogic.spawnPiece()
+        let initialPiece = GameState.shared.currentPiece
+        TetrisGameLogic.saveOrSwitchPiece()
+        XCTAssertEqual(GameState.shared.savedPiece, initialPiece, "The initial piece should be saved.")
+        
+        TetrisGameLogic.spawnPiece() // Spawn a new piece
+        let newPiece = GameState.shared.currentPiece
+        TetrisGameLogic.saveOrSwitchPiece()
+        XCTAssertEqual(GameState.shared.currentPiece, initialPiece, "The initial piece should be switched back as the current piece.")
+        XCTAssertEqual(GameState.shared.savedPiece, newPiece, "The new piece should be saved.")
+    }
 }

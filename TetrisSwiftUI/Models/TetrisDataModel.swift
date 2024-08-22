@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct TetrisPiece {
+struct TetrisPiece: Equatable {
     enum Shape {
         case I, O, T, L, J, S, Z
     }
@@ -115,6 +115,10 @@ struct TetrisPiece {
         }
 
         return grid
+    }
+    
+    static func == (lhs: TetrisPiece, rhs: TetrisPiece) -> Bool {
+        return lhs.shape == rhs.shape
     }
 }
 
