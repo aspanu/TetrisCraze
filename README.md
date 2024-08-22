@@ -1,4 +1,4 @@
-## TetrisSwiftUI
+## TetrisCraze
 
 An implementation of tetris for the Mac Desktop using SwiftUI. This was mainly started as a way to experiment with Swift for MacOS.
 
