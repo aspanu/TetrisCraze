@@ -11,6 +11,8 @@ import SwiftUI
 struct SaveSlotSelectionView: View {
     @ObservedObject var viewModel: SaveSlotSelectionViewModel
     let toLoad: Bool
+    @Binding var isPresented: Bool
+    let onSlotSelected: (Int) -> Void
 
     var body: some View {
         VStack(spacing: 20) {
@@ -51,7 +53,7 @@ struct SaveSlotSelectionView: View {
 
             HStack(spacing: 20) {
                 Button(action: {
-                    // Handle cancel action
+                    isPresented = false
                 }) {
                     Text("Cancel")
                         .font(.headline)
@@ -63,7 +65,10 @@ struct SaveSlotSelectionView: View {
                 }
 
                 Button(action: {
-                    // Handle save/confirm action
+                    print("Calling with slot: \(viewModel.selectedSlot ?? 12)")
+                    onSlotSelected(viewModel.selectedSlot!)
+                    // This button is disabled until a slot is selected
+                    isPresented = false
                 }) {
                     Text("OK")
                         .font(.headline)
@@ -90,7 +95,11 @@ struct SaveSlotSelectionView_Previews: PreviewProvider {
     static var previews: some View {
         SaveSlotSelectionView(
             viewModel: SaveSlotSelectionViewModel(),
-            toLoad: false
+            toLoad: false,
+            isPresented: .constant(true),
+            onSlotSelected: {_ in
+                return
+            }
         )
             .frame(width: 400, height: 300)
     }

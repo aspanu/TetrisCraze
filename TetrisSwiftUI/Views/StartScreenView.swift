@@ -10,6 +10,8 @@ import SwiftUI
 
 struct StartScreenView: View {
     let startGameAction: () -> Void
+    @State private var showSaveSlotSelection = false
+    @State private var isLoadingGame = false
 
     var body: some View {
         VStack {
@@ -19,22 +21,50 @@ struct StartScreenView: View {
                 .padding()
                 .background(Color.black)
                 .cornerRadius(15)
-
-            Button(action: startGameAction) {
-                Text("Start Game")
+            Button(action: {
+                showSaveSlotSelection = true
+                isLoadingGame = false
+            }) {
+                Text("New Game")
                     .font(.title)
-                    .fontWeight(.bold)
                     .padding()
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .shadow(radius: 5)
             }
-            .background(Color.blue)
-            .cornerRadius(10)
-            .shadow(radius: 5)
-            .padding()
-            
+            Button(action: {
+                showSaveSlotSelection = true
+                isLoadingGame = true
+            }) {
+                Text("Load Game")
+                    .font(.title)
+                    .padding()
+                    .background(Color.green)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+                    .shadow(radius: 5)
+            }
         }
         .padding()
         .buttonStyle(PlainButtonStyle())
         .background(Color.clear)
+        .sheet(isPresented: $showSaveSlotSelection) {
+            SaveSlotSelectionView(
+                viewModel: SaveSlotSelectionViewModel(),
+                toLoad: isLoadingGame,
+                isPresented: $showSaveSlotSelection,
+                onSlotSelected: { selectedSlot in
+                    if isLoadingGame {
+                        GameSaveManager.shared.loadGame(slot: selectedSlot)
+                        startGameAction()
+                    } else {
+                        GameState.shared.currentSaveSlot = selectedSlot
+                        startGameAction()
+                    }
+                }
+            )
+        }
     }
 }
 

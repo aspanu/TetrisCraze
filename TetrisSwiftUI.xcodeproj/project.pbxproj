@@ -36,6 +36,7 @@
 		86C292EB2C7C52F0002E3F97 /* SerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292EA2C7C52F0002E3F97 /* SerializationTests.swift */; };
 		86C292ED2C7C5BEA002E3F97 /* GameSaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292EC2C7C5BEA002E3F97 /* GameSaveManager.swift */; };
 		86C292EF2C7C60D1002E3F97 /* GameSaveManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292EE2C7C60D1002E3F97 /* GameSaveManagerTests.swift */; };
+		86C292F12C7C6531002E3F97 /* ScoreAndControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292F02C7C6531002E3F97 /* ScoreAndControlsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		86C292EA2C7C52F0002E3F97 /* SerializationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerializationTests.swift; sourceTree = "<group>"; };
 		86C292EC2C7C5BEA002E3F97 /* GameSaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSaveManager.swift; sourceTree = "<group>"; };
 		86C292EE2C7C60D1002E3F97 /* GameSaveManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSaveManagerTests.swift; sourceTree = "<group>"; };
+		86C292F02C7C6531002E3F97 /* ScoreAndControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreAndControlsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +205,7 @@
 				86C292D22C6C8A4B002E3F97 /* LevelUpView.swift */,
 				86C292B32C5756B1002E3F97 /* KeyEventHandlingView.swift */,
 				86C292D02C6A05C5002E3F97 /* StartScreenView.swift */,
+				86C292F02C7C6531002E3F97 /* ScoreAndControlsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -392,6 +395,7 @@
 				86C292C62C5A4814002E3F97 /* TetrisGame.swift in Sources */,
 				86C292ED2C7C5BEA002E3F97 /* GameSaveManager.swift in Sources */,
 				86C292D52C6C94F7002E3F97 /* SavedPieceView.swift in Sources */,
+				86C292F12C7C6531002E3F97 /* ScoreAndControlsView.swift in Sources */,
 				86C292852C57542A002E3F97 /* ContentView.swift in Sources */,
 				86C292B22C57557A002E3F97 /* TetrisView.swift in Sources */,
 				86C292D72C6C97AD002E3F97 /* GameBoardView.swift in Sources */,

@@ -188,7 +188,7 @@ class GameState: ObservableObject {
         gameTimer = nil
         gameOver = false
         tetrisStreak = 0
-        currentSaveSlot = 0
+        currentSaveSlot = -1
     }
 
     func reset() {
