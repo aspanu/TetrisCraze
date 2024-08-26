@@ -34,6 +34,8 @@
 		86C292E72C7C4CEC002E3F97 /* SaveSlotSelectionModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292E62C7C4CEC002E3F97 /* SaveSlotSelectionModelTests.swift */; };
 		86C292E92C7C5003002E3F97 /* SerializableGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292E82C7C5003002E3F97 /* SerializableGameState.swift */; };
 		86C292EB2C7C52F0002E3F97 /* SerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292EA2C7C52F0002E3F97 /* SerializationTests.swift */; };
+		86C292ED2C7C5BEA002E3F97 /* GameSaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292EC2C7C5BEA002E3F97 /* GameSaveManager.swift */; };
+		86C292EF2C7C60D1002E3F97 /* GameSaveManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292EE2C7C60D1002E3F97 /* GameSaveManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,8 @@
 		86C292E62C7C4CEC002E3F97 /* SaveSlotSelectionModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSlotSelectionModelTests.swift; sourceTree = "<group>"; };
 		86C292E82C7C5003002E3F97 /* SerializableGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerializableGameState.swift; sourceTree = "<group>"; };
 		86C292EA2C7C52F0002E3F97 /* SerializationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerializationTests.swift; sourceTree = "<group>"; };
+		86C292EC2C7C5BEA002E3F97 /* GameSaveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSaveManager.swift; sourceTree = "<group>"; };
+		86C292EE2C7C60D1002E3F97 /* GameSaveManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSaveManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +167,7 @@
 				86C292CC2C5B6FF0002E3F97 /* TetrisGameLoopTests.swift */,
 				86C292E62C7C4CEC002E3F97 /* SaveSlotSelectionModelTests.swift */,
 				86C292EA2C7C52F0002E3F97 /* SerializationTests.swift */,
+				86C292EE2C7C60D1002E3F97 /* GameSaveManagerTests.swift */,
 			);
 			path = TetrisSwiftUITests;
 			sourceTree = "<group>";
@@ -209,6 +214,7 @@
 				86C292C32C5A45F0002E3F97 /* TetrisGameLoop.swift */,
 				86C292C82C5A48F2002E3F97 /* ExternalInputHandler.swift */,
 				86C292CE2C64B6AB002E3F97 /* ColourScheme.swift */,
+				86C292EC2C7C5BEA002E3F97 /* GameSaveManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -384,6 +390,7 @@
 			files = (
 				86C292B42C5756B1002E3F97 /* KeyEventHandlingView.swift in Sources */,
 				86C292C62C5A4814002E3F97 /* TetrisGame.swift in Sources */,
+				86C292ED2C7C5BEA002E3F97 /* GameSaveManager.swift in Sources */,
 				86C292D52C6C94F7002E3F97 /* SavedPieceView.swift in Sources */,
 				86C292852C57542A002E3F97 /* ContentView.swift in Sources */,
 				86C292B22C57557A002E3F97 /* TetrisView.swift in Sources */,
@@ -408,6 +415,7 @@
 			files = (
 				86C292952C57542B002E3F97 /* TetrisSwiftUITests.swift in Sources */,
 				86C292E72C7C4CEC002E3F97 /* SaveSlotSelectionModelTests.swift in Sources */,
+				86C292EF2C7C60D1002E3F97 /* GameSaveManagerTests.swift in Sources */,
 				86C292CD2C5B6FF0002E3F97 /* TetrisGameLoopTests.swift in Sources */,
 				86C292CB2C5B6E8B002E3F97 /* TetrisGameLogicTests.swift in Sources */,
 				86C292EB2C7C52F0002E3F97 /* SerializationTests.swift in Sources */,

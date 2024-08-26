@@ -33,7 +33,7 @@ class SerializationTests: XCTestCase {
         }
 
         // Load the deserialized state back into the game
-        GameState.shared.loadFromSerializableGameState(decodedState)
+        GameState.shared.fromSerializableGameState(decodedState)
 
         // Verify the deserialized state matches the original state
         XCTAssertEqual(GameState.shared.grid[0][0], .staticBlock)

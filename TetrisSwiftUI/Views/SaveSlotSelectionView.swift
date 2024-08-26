@@ -10,6 +10,7 @@ import SwiftUI
 
 struct SaveSlotSelectionView: View {
     @ObservedObject var viewModel: SaveSlotSelectionViewModel
+    let toLoad: Bool
 
     var body: some View {
         VStack(spacing: 20) {
@@ -28,9 +29,11 @@ struct SaveSlotSelectionView: View {
                                 .foregroundColor(.white)
                                 .padding(.bottom, 10)
 
-                            Text("LOAD GAME")
-                                .font(.subheadline)
-                                .foregroundColor(.white)
+                            if toLoad {
+                                Text("LOAD GAME")
+                                    .font(.subheadline)
+                                    .foregroundColor(.white)
+                            }
                         }
                         .frame(width: 100, height: 100)
                         .background(
@@ -86,7 +89,8 @@ struct SaveSlotSelectionView: View {
 struct SaveSlotSelectionView_Previews: PreviewProvider {
     static var previews: some View {
         SaveSlotSelectionView(
-            viewModel: SaveSlotSelectionViewModel()
+            viewModel: SaveSlotSelectionViewModel(),
+            toLoad: false
         )
             .frame(width: 400, height: 300)
     }

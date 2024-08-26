@@ -176,6 +176,7 @@ class GameState: ObservableObject {
     @Published var hasSwitched: Bool = false
 
     var tetrisStreak: Int
+    var currentSaveSlot: Int
 
     private init() {
         grid = Array(repeating: Array(repeating: .empty, count: TetrisConstants.width), count: TetrisConstants.height)
@@ -187,6 +188,7 @@ class GameState: ObservableObject {
         gameTimer = nil
         gameOver = false
         tetrisStreak = 0
+        currentSaveSlot = 0
     }
 
     func reset() {
@@ -236,7 +238,7 @@ class GameState: ObservableObject {
             )
         }
 
-        func loadFromSerializableGameState(_ state: SerializableGameState) {
+        func fromSerializableGameState(_ state: SerializableGameState) {
             // Load the grid
             grid = state.grid.map { row in
                 row.map { isFilled in
