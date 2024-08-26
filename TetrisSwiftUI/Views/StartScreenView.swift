@@ -10,10 +10,11 @@ import SwiftUI
 
 struct StartScreenView: View {
     let startGameAction: () -> Void
-
+    let loadGameAction: () -> Void
+    
     var body: some View {
         VStack {
-            Text("Tetris Game")
+            Text("Tetris Craze")
                 .font(.system(size: 50, weight: .bold, design: .rounded))
                 .foregroundColor(.white)
                 .padding()
@@ -21,7 +22,7 @@ struct StartScreenView: View {
                 .cornerRadius(15)
 
             Button(action: startGameAction) {
-                Text("Start Game")
+                Text("New Game")
                     .font(.title)
                     .fontWeight(.bold)
                     .padding()
@@ -31,6 +32,16 @@ struct StartScreenView: View {
             .shadow(radius: 5)
             .padding()
             
+            Button(action: loadGameAction) {
+                Text("Load Game")
+                    .font(.title)
+                    .padding()
+            }
+            .background(Color.blue)
+            .cornerRadius(10)
+            .shadow(radius: 5)
+            .padding()
+
         }
         .padding()
         .buttonStyle(PlainButtonStyle())
@@ -41,6 +52,8 @@ struct StartScreenView: View {
 struct StartScreen_Preview: PreviewProvider {
     static var previews: some View {
         StartScreenView {
+            return
+        } loadGameAction: {
             return
         }
     }

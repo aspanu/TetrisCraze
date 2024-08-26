@@ -16,15 +16,14 @@ enum ColourScheme {
     static let staticPieceColour: Color = .mint
     static let outlinePieceColour: Color = .yellow
 
-
-    static let pieceColours: [TetrisPiece.Shape: LinearGradient] = [
-        .I: LinearGradient(gradient: Gradient(colors: [Color.cyan, Color.blue]), startPoint: .top, endPoint: .bottom),
-        .O: LinearGradient(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .top, endPoint: .bottom),
-        .T: LinearGradient(gradient: Gradient(colors: [Color.purple, Color.pink]), startPoint: .top, endPoint: .bottom),
-        .L: LinearGradient(gradient: Gradient(colors: [Color.orange, Color.red]), startPoint: .top, endPoint: .bottom),
-        .J: LinearGradient(gradient: Gradient(colors: [Color.blue, Color.indigo]), startPoint: .top, endPoint: .bottom),
-        .S: LinearGradient(gradient: Gradient(colors: [Color.green, Color.yellow]), startPoint: .top, endPoint: .bottom),
-        .Z: LinearGradient(gradient: Gradient(colors: [Color.red, Color.purple]), startPoint: .top, endPoint: .bottom),
+    static let pieceColours: [TetrisPiece.Shape: GradientInfo] = [
+        .I: GradientInfo(gradient: Gradient(colors: [Color.cyan, Color.blue]), startPoint: .top, endPoint: .bottom),
+        .O: GradientInfo(gradient: Gradient(colors: [Color.yellow, Color.orange]), startPoint: .top, endPoint: .bottom),
+        .T: GradientInfo(gradient: Gradient(colors: [Color.purple, Color.pink]), startPoint: .top, endPoint: .bottom),
+        .L: GradientInfo(gradient: Gradient(colors: [Color.orange, Color.red]), startPoint: .top, endPoint: .bottom),
+        .J: GradientInfo(gradient: Gradient(colors: [Color.blue, Color.indigo]), startPoint: .top, endPoint: .bottom),
+        .S: GradientInfo(gradient: Gradient(colors: [Color.green, Color.yellow]), startPoint: .top, endPoint: .bottom),
+        .Z: GradientInfo(gradient: Gradient(colors: [Color.red, Color.purple]), startPoint: .top, endPoint: .bottom),
     ]
     
     static func pieceColour(for block: TetrisBlock) -> LinearGradient {
@@ -36,7 +35,7 @@ enum ColourScheme {
         case .outline:
             return LinearGradient(gradient: Gradient(colors: [Color.clear]), startPoint: .top, endPoint: .bottom)
         case .filled(let gradient):
-            return gradient
+            return gradient.toLinearGradient()
         }
     }
 }

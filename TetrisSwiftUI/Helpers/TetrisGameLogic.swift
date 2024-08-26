@@ -56,7 +56,7 @@ enum TetrisGameLogic {
             let row = GameState.shared.currentPiecePosition.row + cell.0
             let col = GameState.shared.currentPiecePosition.col + cell.1
             if row >= 0, row < TetrisConstants.height, col >= 0, col < TetrisConstants.width {
-                GameState.shared.grid[row][col] = .filled(GameState.shared.currentPiece.colour)
+                GameState.shared.grid[row][col] = .filled(ColourScheme.pieceColours[GameState.shared.currentPiece.shape]!)
             }
         }
     }

@@ -54,8 +54,8 @@ struct GameBoardView_Preview: PreviewProvider {
     static func sampleGrid() -> [[TetrisBlock]] {
         // Creating a 10x20 grid with some filled blocks for demonstration
         var grid = Array(repeating: Array(repeating: TetrisBlock.empty, count: 10), count: 20)
-        grid[5][4] = .filled(LinearGradient(gradient: Gradient(colors: [.red, .orange]), startPoint: .top, endPoint: .bottom))
-        grid[5][5] = .filled(LinearGradient(gradient: Gradient(colors: [.blue, .purple]), startPoint: .top, endPoint: .bottom))
+        grid[5][4] = .filled(GradientInfo(gradient: Gradient(colors: [.red, .orange]), startPoint: .top, endPoint: .bottom))
+        grid[5][5] = .filled(GradientInfo(gradient: Gradient(colors: [.blue, .purple]), startPoint: .top, endPoint: .bottom))
         grid[6][4] = .outline
         grid[6][5] = .outline
         return grid
