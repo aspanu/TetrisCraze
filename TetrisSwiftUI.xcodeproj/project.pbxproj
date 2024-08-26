@@ -32,6 +32,8 @@
 		86C292E12C7C4AE9002E3F97 /* SaveSlotSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292E02C7C4AE9002E3F97 /* SaveSlotSelectionView.swift */; };
 		86C292E52C7C4BF8002E3F97 /* SaveSlotSelectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292E42C7C4BF8002E3F97 /* SaveSlotSelectionModel.swift */; };
 		86C292E72C7C4CEC002E3F97 /* SaveSlotSelectionModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292E62C7C4CEC002E3F97 /* SaveSlotSelectionModelTests.swift */; };
+		86C292E92C7C5003002E3F97 /* SerializableGameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292E82C7C5003002E3F97 /* SerializableGameState.swift */; };
+		86C292EB2C7C52F0002E3F97 /* SerializationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C292EA2C7C52F0002E3F97 /* SerializationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +83,8 @@
 		86C292E02C7C4AE9002E3F97 /* SaveSlotSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSlotSelectionView.swift; sourceTree = "<group>"; };
 		86C292E42C7C4BF8002E3F97 /* SaveSlotSelectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSlotSelectionModel.swift; sourceTree = "<group>"; };
 		86C292E62C7C4CEC002E3F97 /* SaveSlotSelectionModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveSlotSelectionModelTests.swift; sourceTree = "<group>"; };
+		86C292E82C7C5003002E3F97 /* SerializableGameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerializableGameState.swift; sourceTree = "<group>"; };
+		86C292EA2C7C52F0002E3F97 /* SerializationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SerializationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +162,7 @@
 				86C292CA2C5B6E8B002E3F97 /* TetrisGameLogicTests.swift */,
 				86C292CC2C5B6FF0002E3F97 /* TetrisGameLoopTests.swift */,
 				86C292E62C7C4CEC002E3F97 /* SaveSlotSelectionModelTests.swift */,
+				86C292EA2C7C52F0002E3F97 /* SerializationTests.swift */,
 			);
 			path = TetrisSwiftUITests;
 			sourceTree = "<group>";
@@ -178,6 +183,7 @@
 				86C292B72C576737002E3F97 /* TetrisDataModel.swift */,
 				86C292C52C5A4814002E3F97 /* TetrisGame.swift */,
 				86C292E42C7C4BF8002E3F97 /* SaveSlotSelectionModel.swift */,
+				86C292E82C7C5003002E3F97 /* SerializableGameState.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -388,6 +394,7 @@
 				86C292C22C5A45A5002E3F97 /* TetrisGameLogic.swift in Sources */,
 				86C292E12C7C4AE9002E3F97 /* SaveSlotSelectionView.swift in Sources */,
 				86C292D32C6C8A4B002E3F97 /* LevelUpView.swift in Sources */,
+				86C292E92C7C5003002E3F97 /* SerializableGameState.swift in Sources */,
 				86C292C42C5A45F0002E3F97 /* TetrisGameLoop.swift in Sources */,
 				86C292D12C6A05C5002E3F97 /* StartScreenView.swift in Sources */,
 				86C292832C57542A002E3F97 /* TetrisSwiftUIApp.swift in Sources */,
@@ -403,6 +410,7 @@
 				86C292E72C7C4CEC002E3F97 /* SaveSlotSelectionModelTests.swift in Sources */,
 				86C292CD2C5B6FF0002E3F97 /* TetrisGameLoopTests.swift in Sources */,
 				86C292CB2C5B6E8B002E3F97 /* TetrisGameLogicTests.swift in Sources */,
+				86C292EB2C7C52F0002E3F97 /* SerializationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

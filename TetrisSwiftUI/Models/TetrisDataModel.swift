@@ -9,11 +9,11 @@ import Foundation
 import SwiftUI
 
 struct TetrisPiece: Equatable {
-    enum Shape {
+    enum Shape: Codable {
         case I, O, T, L, J, S, Z
     }
 
-    enum Orientation {
+    enum Orientation: Codable {
         case north, south, east, west
     }
 
@@ -200,4 +200,73 @@ class GameState: ObservableObject {
         gameOver = false
         tetrisStreak = 0
     }
+    
+    func toSerializableGameState() -> SerializableGameState {
+        let serializedGrid: [[Bool]] = grid.map({(row: [TetrisBlock])
+            in row.map( {
+                (block: TetrisBlock) -> Bool in
+                    switch block {
+                    case .staticBlock:
+                        return true
+                    default:
+                        return false
+                    }
+                })
+            })
+            let currentPieceState = SerializableGameState.PieceState(
+                shape: currentPiece.shape,
+                orientation: currentPiece.orientation,
+                position: SerializableGameState.PieceState.Position(row: currentPiecePosition.row, col: currentPiecePosition.col)
+            )
+
+            let savedPieceState: SerializableGameState.PieceState? = savedPiece.map {
+                SerializableGameState.PieceState(
+                    shape: $0.shape,
+                    orientation: $0.orientation,
+                    position: SerializableGameState.PieceState.Position(row: 0, col: 0) // Position doesn't matter for saved pieces
+                )
+            }
+
+            return SerializableGameState(
+                grid: serializedGrid,
+                currentPiece: currentPieceState,
+                savedPiece: savedPieceState,
+                score: score,
+                totalLinesCleared: totalLinesCleared
+            )
+        }
+
+        func loadFromSerializableGameState(_ state: SerializableGameState) {
+            // Load the grid
+            grid = state.grid.map { row in
+                row.map { isFilled in
+                    if isFilled {
+                        return .staticBlock
+                    } else {
+                        return .empty
+                    }
+                }
+            }
+
+            // Load the current piece
+            currentPiece = TetrisPiece(
+                shape: state.currentPiece.shape,
+                orientation: state.currentPiece.orientation
+            )
+            currentPiecePosition = (row: state.currentPiece.position.row, col: state.currentPiece.position.col)
+
+            // Load the saved piece
+            if let savedPieceState = state.savedPiece {
+                savedPiece = TetrisPiece(
+                    shape: savedPieceState.shape,
+                    orientation: savedPieceState.orientation
+                )
+            } else {
+                savedPiece = nil
+            }
+
+            // Load the score and lines cleared
+            score = state.score
+            totalLinesCleared = state.totalLinesCleared
+        }
 }
