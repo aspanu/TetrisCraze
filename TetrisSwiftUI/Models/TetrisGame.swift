@@ -25,6 +25,11 @@ class TetrisGame: ObservableObject {
         GameLoop.startGameTimer()
         TetrisGameLogic.spawnPiece()
     }
+    
+    func loadGame() {
+        showStartScreen = false
+        GameLoop.startGameTimer()
+    }
 
     func togglePause() {
         if GameState.shared.gameTimer != nil {

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct StartScreenView: View {
     let startGameAction: () -> Void
+    let loadGameAction: () -> Void
     @State private var showSaveSlotSelection = false
     @State private var isLoadingGame = false
 
@@ -57,7 +58,7 @@ struct StartScreenView: View {
                 onSlotSelected: { selectedSlot in
                     if isLoadingGame {
                         GameSaveManager.shared.loadGame(slot: selectedSlot)
-                        startGameAction()
+                        loadGameAction()
                     } else {
                         GameState.shared.currentSaveSlot = selectedSlot
                         startGameAction()
@@ -70,8 +71,8 @@ struct StartScreenView: View {
 
 struct StartScreen_Preview: PreviewProvider {
     static var previews: some View {
-        StartScreenView {
+        StartScreenView( startGameAction: { return }, loadGameAction: {
             return
-        }
+        })
     }
 }

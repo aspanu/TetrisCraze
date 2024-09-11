@@ -34,10 +34,12 @@ class GameSaveManager {
     func saveGame() {
         let slot = GameState.shared.currentSaveSlot
         let fileURL = savesDirectoryURL.appendingPathComponent("SaveSlot\(slot).json")
-        
+        print("File url: \(fileURL)")
         do {
             let serializedState = GameState.shared.toSerializableGameState()
+            print("Serialized data: \(serializedState)")
             let data = try JSONEncoder().encode(serializedState)
+            print("Encoded data: \(data)")
             try data.write(to: fileURL)
             print("Game saved successfully in slot \(slot).")
         } catch {
@@ -47,11 +49,14 @@ class GameSaveManager {
     
     func loadGame(slot: Int) {
         let fileURL = savesDirectoryURL.appendingPathComponent("SaveSlot\(slot).json")
+        print("File url: \(fileURL)")
         
         do {
             let data = try Data(contentsOf: fileURL)
+            print("Data: \(data)")
             let serializedState = try JSONDecoder().decode(SerializableGameState.self, from: data)
-            GameState.shared.fromSerializableGameState(serializedState)
+            print("Serialized state: \(serializedState)")
+            GameState.shared.fromSerializableGameState(from: serializedState)
             print("Game loaded successfully from slot \(slot).")
         } catch {
             print("Error loading game: \(error)")

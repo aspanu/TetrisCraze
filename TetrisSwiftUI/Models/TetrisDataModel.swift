@@ -238,7 +238,8 @@ class GameState: ObservableObject {
             )
         }
 
-        func fromSerializableGameState(_ state: SerializableGameState) {
+    func fromSerializableGameState(from state: SerializableGameState) {
+            print("Initial grid: \(grid)")
             // Load the grid
             grid = state.grid.map { row in
                 row.map { isFilled in
@@ -249,6 +250,7 @@ class GameState: ObservableObject {
                     }
                 }
             }
+            print("New grid: \(grid)")
 
             // Load the current piece
             currentPiece = TetrisPiece(

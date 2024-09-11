@@ -20,7 +20,7 @@ struct TetrisView: View {
                             .edgesIgnoringSafeArea(.all) // Ensure the background gradient covers the entire screen
             
             if tetrisGame.showStartScreen {
-                StartScreenView(startGameAction: tetrisGame.startGame)
+                StartScreenView(startGameAction: tetrisGame.startGame, loadGameAction: tetrisGame.loadGame)
             } else {
                 GeometryReader { geometry in
                     HStack(spacing: 0) {
